@@ -1,4 +1,4 @@
-import type { ItemStatus, Priority, Role } from "./types";
+import type { ItemStatus, Priority } from "./types";
 
 export const CATEGORIES = [
   { id: "staple", label: "Beras & bahan pokok", emoji: "🍚" },
@@ -36,14 +36,5 @@ export const STATUSES: { id: ItemStatus; label: string }[] = [
   { id: "unavailable", label: "Tidak tersedia" },
   { id: "cancelled", label: "Batal" },
 ];
-
-export const ROLES: { id: Role; label: string; description: string }[] = [
-  { id: "owner", label: "Pemilik", description: "Kendali penuh, kelola anggota" },
-  { id: "admin", label: "Admin", description: "Kelola daftar & lihat aktivitas" },
-  { id: "member", label: "Anggota", description: "Tambah, centang, catat belanja" },
-  { id: "viewer", label: "Pemantau", description: "Hanya bisa melihat" },
-];
-
-export const roleLabel = (r: Role) => ROLES.find((x) => x.id === r)?.label ?? r;
 
 export const PAYMENT_METHODS = ["Tunai", "QRIS", "Debit", "Kartu kredit", "Transfer", "E-wallet"];

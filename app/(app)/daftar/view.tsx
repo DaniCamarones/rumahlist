@@ -3,28 +3,26 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useApp } from "@/components/app-provider";
 import { CatalogPicker } from "@/components/catalog-picker";
-import { ItemSuggestInput } from "@/components/item-suggest-input";
-import { findCatalogItem, type CatalogItem } from "@/lib/catalog";
-import { useHousehold } from "@/components/household-provider";
 import { ItemForm } from "@/components/item-form";
+import { ItemIcon } from "@/components/item-icon";
+import { frequentItems } from "@/lib/local/state";
 import { ItemRow } from "@/components/item-row";
-import { ListSkeleton } from "@/components/skeleton";
+import { ItemSuggestInput } from "@/components/item-suggest-input";
 import { Sheet } from "@/components/sheet";
 import { useToast } from "@/components/toast";
-import { useShoppingItems } from "@/hooks/use-shopping-items";
+import { findCatalogItem, type CatalogItem } from "@/lib/catalog";
 import { CATEGORIES, PRIORITIES, categoryOf } from "@/lib/constants";
 import { formatRupiah } from "@/lib/format";
-import { changeStatus, deleteItem, duplicateItem } from "@/lib/item-actions";
-import { errorText, supabase } from "@/lib/supabase/client";
 import { estimatedTotal } from "@/lib/totals";
 import type { ShoppingItem } from "@/lib/types";
 
 const rank = (p: ShoppingItem["priority"]) => PRIORITIES.find((x) => x.id === p)!.rank;
 
 export default function ShoppingListPage() {
-  const { household, userId, canEdit } = useHousehold();
-  const { items, loading, error, patchLocal, removeLocal, refetch } = useShoppingItems(household.id);
+  const app = useApp();
+  const items = app.state.items;
   const toast = useToast();
   const router = useRouter();
 
@@ -40,17 +38,17 @@ export default function ShoppingListPage() {
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
-    if (window.location.hash === "#tambah" && canEdit) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- deep link from dashboard
+    if (window.location.hash === "#tambah") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- deep link from home
       setFormOpen(true);
-      history.replaceState(null, "", "/daftar");
+      history.replaceState(null, "", window.location.pathname);
     }
-  }, [canEdit]);
+  }, []);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return items
-      .filter((i) => (!q || i.name.toLowerCase().includes(q) || i.notes?.toLowerCase().includes(q)))
+      .filter((i) => !q || i.name.toLowerCase().includes(q) || i.notes?.toLowerCase().includes(q))
       .filter((i) => !category || i.category === category)
       .sort((a, b) =>
         sort === "priority"
@@ -69,21 +67,15 @@ export default function ShoppingListPage() {
   }, [grouped, pending]);
 
   const usedCategories = CATEGORIES.filter((c) => items.some((i) => i.category === c.id));
-
-  async function toggle(item: ShoppingItem) {
-    const to = item.status === "purchased" ? "pending" : "purchased";
-    patchLocal(item.id, { status: to, checked_by: to === "pending" ? null : userId });
-    const res = await changeStatus(item, item.status, to, userId);
-    if (!res.ok) {
-      toast(res.reason === "conflict" ? "Barang ini sudah diubah anggota lain" : errorText(res), "error");
-      refetch();
-    }
-  }
-
+  const frequent = useMemo(() => frequentItems(app.state, 10), [app.state]);
   const inList = useMemo(
     () => new Set(items.filter((i) => i.status === "pending").map((i) => i.name.toLowerCase())),
     [items],
   );
+
+  function toggle(item: ShoppingItem) {
+    app.setStatus(item.id, item.status === "purchased" ? "pending" : "purchased");
+  }
 
   /** Adds a catalog item (category, unit, quantity filled in) or a typed name. */
   async function addItem(item: CatalogItem | { name: string }): Promise<boolean> {
@@ -94,16 +86,10 @@ export default function ShoppingListPage() {
       toast(`${name} sudah ada di daftar`);
       return true;
     }
-    const { error } = await supabase().from("shopping_items").insert({
-      household_id: household.id,
-      added_by: userId,
-      name,
-      category: known?.category ?? category ?? "other",
-      unit: known?.unit ?? "pcs",
-      quantity: known?.quantity ?? 1,
-    });
-    if (error) {
-      toast(errorText(error), "error");
+    try {
+      app.add({ name, category: known?.category ?? category ?? "other", unit: known?.unit, quantity: known?.quantity });
+    } catch (err) {
+      toast((err as Error).message, "error");
       return false;
     }
     toast(`${name} ditambahkan`);
@@ -115,7 +101,7 @@ export default function ShoppingListPage() {
     if (!(await addItem(item))) setQuick(item.name);
   }
 
-  async function menuAction(action: "edit" | "duplicate" | "unavailable" | "cancel" | "restore" | "delete") {
+  function menuAction(action: "edit" | "duplicate" | "unavailable" | "cancel" | "restore" | "delete") {
     const item = menuItem!;
     if (action === "edit") {
       setMenuItem(null);
@@ -130,19 +116,13 @@ export default function ShoppingListPage() {
     setMenuItem(null);
     setConfirmDelete(false);
     if (action === "duplicate") {
-      const { error } = await duplicateItem(item, userId);
-      toast(error ? errorText(error) : `${item.name} diduplikat`, error ? "error" : "ok");
+      app.duplicate(item.id);
+      toast(`${item.name} diduplikat`);
     } else if (action === "delete") {
-      removeLocal(item.id);
-      const { error } = await deleteItem(item.id);
-      if (error) {
-        toast(errorText(error), "error");
-        refetch();
-      } else toast(`${item.name} dihapus`);
+      app.remove(item.id);
+      toast(`${item.name} dihapus`);
     } else {
-      const to = action === "unavailable" ? "unavailable" : action === "cancel" ? "cancelled" : "pending";
-      const res = await changeStatus(item, item.status, to, userId);
-      if (!res.ok) toast(res.reason === "conflict" ? "Barang ini sudah diubah anggota lain" : errorText(res), "error");
+      app.setStatus(item.id, action === "unavailable" ? "unavailable" : action === "cancel" ? "cancelled" : "pending");
     }
   }
 
@@ -156,7 +136,7 @@ export default function ShoppingListPage() {
   return (
     <div>
       <header>
-        <p className="slip-heading">Nota belanja · {household.name}</p>
+        <p className="slip-heading">Nota belanja</p>
         <h1 className="mt-1 font-mono text-[26px] leading-tight font-semibold md:text-[30px]">Daftar Belanja</h1>
         <p className="mt-1 font-mono text-[14px] text-muted">
           {pendingCount} barang belum dibeli
@@ -164,27 +144,45 @@ export default function ShoppingListPage() {
         </p>
       </header>
 
-      {canEdit && (
-        <div className="mt-5 flex gap-2">
-          <div className="min-w-0 flex-1">
-            <ItemSuggestInput value={quick} onChange={setQuick} inList={inList}
-              placeholder="Ketik barang, mis. a, bawang"
-              onPick={(item) => addQuick(item)} onSubmitText={(name) => addQuick({ name })} />
-          </div>
-          <button className="btn btn-ghost shrink-0 px-3 font-mono text-[14px] uppercase" onClick={() => setCatalogOpen(true)}>
-            Katalog
-          </button>
+      <div className="mt-5 flex gap-2">
+        <div className="min-w-0 flex-1">
+          <ItemSuggestInput value={quick} onChange={setQuick} inList={inList}
+            placeholder="Ketik barang, mis. a, bawang"
+            onPick={(item) => addQuick(item)} onSubmitText={(name) => addQuick({ name })} />
         </div>
+        <button className="btn btn-ghost shrink-0 px-3 font-mono text-[14px] uppercase" onClick={() => setCatalogOpen(true)}>
+          Katalog
+        </button>
+      </div>
+
+      {frequent.length > 0 && (
+        <section className="mt-4" aria-label="Pernah dibeli">
+          <h2 className="slip-heading">Pernah dibeli · ketuk untuk beli lagi</h2>
+          <div className="-mx-4 mt-2 flex gap-1.5 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">
+            {frequent.map((f) => (
+              <button key={f.name}
+                onClick={() => {
+                  app.add({ name: f.name, category: f.category, unit: f.unit, quantity: f.quantity, estimated_price: f.price });
+                  toast(`${f.name} ditambahkan`);
+                }}
+                className="flex min-h-11 shrink-0 items-center gap-1.5 border-[1.5px] border-ink/35 bg-paper pr-3 pl-1.5 font-mono text-[13px] whitespace-nowrap hover:border-ink">
+                <ItemIcon name={f.name} category={f.category} size="sm" />+ {f.name}
+              </button>
+            ))}
+          </div>
+        </section>
       )}
 
-      <div className="mt-3 flex gap-2">
-        <input type="search" aria-label="Cari barang di daftar" placeholder="Cari di daftar" className="field min-w-0 flex-1"
-          value={query} onChange={(e) => setQuery(e.target.value)} />
-        <select aria-label="Urutkan" className="field w-auto" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)}>
-          <option value="priority">Urut: segera dulu</option>
-          <option value="newest">Urut: terbaru</option>
-        </select>
-      </div>
+      {items.length > 0 && (
+        <div className="mt-3 flex gap-2">
+          <input type="search" aria-label="Cari barang di daftar" placeholder="Cari di daftar" className="field min-w-0 flex-1"
+            value={query} onChange={(e) => setQuery(e.target.value)} />
+          <select aria-label="Urutkan" className="field w-auto" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)}>
+            <option value="priority">Urut: segera dulu</option>
+            <option value="newest">Urut: terbaru</option>
+          </select>
+        </div>
+      )}
 
       {usedCategories.length > 0 && (
         <div className="-mx-4 mt-3 flex gap-1.5 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0">
@@ -199,23 +197,13 @@ export default function ShoppingListPage() {
         </div>
       )}
 
-      {loading ? (
-        <ListSkeleton />
-      ) : error ? (
-        <div className="paper mt-6 px-5 py-6">
-          <p className="font-mono font-semibold">Daftar gagal dimuat.</p>
-          <p className="mt-1 text-sm text-muted">{errorText({ message: error })}</p>
-          <button className="btn btn-ghost mt-4" onClick={refetch}>Coba lagi</button>
-        </div>
-      ) : items.length === 0 ? (
+      {items.length === 0 ? (
         <div className="paper torn mt-6 px-5 pt-6 pb-8">
           <p className="font-mono text-[17px] font-semibold">Nota masih kosong</p>
           <p className="mt-1 text-[15px] text-muted">
-            Ketik nama barang di atas, atau buka Katalog dan ketuk barang yang mau dibeli. Semua anggota keluarga langsung melihatnya.
+            Ketik nama barang di atas, atau buka Katalog dan ketuk barang yang mau dibeli. Semua tersimpan di HP ini, tanpa internet.
           </p>
-          {canEdit && (
-            <button className="btn btn-primary mt-4" onClick={() => setCatalogOpen(true)}>Buka katalog</button>
-          )}
+          <button className="btn btn-primary mt-4" onClick={() => setCatalogOpen(true)}>Buka katalog</button>
         </div>
       ) : (
         <>
@@ -244,11 +232,9 @@ export default function ShoppingListPage() {
               <span className="leader" />
               <span className="text-[18px] font-semibold tabular-nums">{formatRupiah(total)}</span>
             </div>
-            {canEdit && (
-              <button onClick={openForm} className="mt-3 min-h-11 text-left font-mono text-[14px] font-medium text-accent underline underline-offset-4">
-                + Tambah dengan detail (harga, catatan, tugas)
-              </button>
-            )}
+            <button onClick={openForm} className="mt-3 min-h-11 text-left font-mono text-[14px] font-medium text-accent underline underline-offset-4">
+              + Tambah dengan detail (harga, catatan)
+            </button>
           </section>
 
           {done.length > 0 && (

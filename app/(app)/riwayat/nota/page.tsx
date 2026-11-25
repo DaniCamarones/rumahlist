@@ -1,40 +1,38 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { Suspense } from "react";
 import Link from "next/link";
-import { useHousehold } from "@/components/household-provider";
-import { ListSkeleton } from "@/components/skeleton";
+import { useSearchParams } from "next/navigation";
+import { useApp } from "@/components/app-provider";
 import { ItemIcon } from "@/components/item-icon";
+import { useToast } from "@/components/toast";
 import { CATEGORIES } from "@/lib/constants";
 import { formatDate, formatQty, formatRupiah } from "@/lib/format";
-import { supabase } from "@/lib/supabase/client";
 import { priceUnit, toDisplayPrice } from "@/lib/units";
-import type { SessionItem, ShoppingSession } from "@/lib/types";
 
 const plain = (n: number) => formatRupiah(n).replace("Rp", "");
 
-/** One finished shopping trip, printed as the receipt it represents. */
-export default function SessionDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params);
-  const { household, memberName } = useHousehold();
-  const [session, setSession] = useState<ShoppingSession | null | undefined>();
-  const [items, setItems] = useState<SessionItem[]>([]);
+export default function ReceiptPage() {
+  return (
+    <Suspense fallback={<p className="font-mono text-muted">Membuka nota…</p>}>
+      <Receipt />
+    </Suspense>
+  );
+}
 
-  useEffect(() => {
-    const db = supabase();
-    Promise.all([
-      db.from("shopping_sessions").select("*").eq("id", id).maybeSingle(),
-      db.from("shopping_session_items").select("*").eq("session_id", id),
-    ]).then(([s, i]) => {
-      setSession((s.data as ShoppingSession) ?? null);
-      setItems(((i.data ?? []) as SessionItem[]).map((x) => ({
-        ...x,
-        quantity: Number(x.quantity),
-        estimated_price: x.estimated_price == null ? null : Number(x.estimated_price),
-        actual_price: x.actual_price == null ? null : Number(x.actual_price),
-      })));
-    });
-  }, [id]);
+/** One finished shopping trip, printed as the receipt it represents. Uses ?id= so it works as a static page. */
+function Receipt() {
+  const id = useSearchParams().get("id");
+  const app = useApp();
+  const { state } = app;
+  const toast = useToast();
+  const session = state.sessions.find((s) => s.id === id);
+  const waiting = new Set(state.items.filter((i) => i.status === "pending").map((i) => i.name.toLowerCase()));
+
+  function again(lineIds?: string[]) {
+    const n = app.buyAgain(session!.id, lineIds);
+    toast(n ? `${n} barang masuk daftar belanja` : "Semua barang ini sudah ada di daftar");
+  }
 
   const back = (
     <Link href="/riwayat" className="-ml-1 inline-flex min-h-11 items-center px-1 font-mono text-[14px] underline underline-offset-4">
@@ -42,22 +40,21 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
     </Link>
   );
 
-  if (session === undefined) return <>{back}<ListSkeleton label="Memuat nota" /></>;
-  if (session === null)
+  if (!session)
     return (
       <>
         {back}
         <div className="paper mt-4 p-5">
-          <p className="font-mono font-semibold">Nota ini tidak ditemukan.</p>
-          <p className="mt-1 text-sm text-muted">Mungkin milik keluarga lain, atau tautannya salah.</p>
+          <p className="font-mono font-semibold">Nota ini tidak ditemukan di HP ini.</p>
+          <p className="mt-1 text-sm text-muted">Mungkin sudah dihapus, atau dibuat di perangkat lain.</p>
         </div>
       </>
     );
 
+  const items = state.sessionItems
+    .filter((i) => i.session_id === session.id)
+    .sort((a, b) => CATEGORIES.findIndex((c) => c.id === a.category) - CATEGORIES.findIndex((c) => c.id === b.category));
   const diff = session.total_actual - session.total_estimated;
-  const sorted = [...items].sort(
-    (a, b) => CATEGORIES.findIndex((c) => c.id === a.category) - CATEGORIES.findIndex((c) => c.id === b.category),
-  );
 
   return (
     <div className="max-w-md">
@@ -65,11 +62,11 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
       <article className="paper torn mt-2 px-5 pt-5 pb-9 font-mono">
         <header className="text-center">
           <p className="text-[17px] font-semibold">{(session.store_name ?? "Belanja").toUpperCase()}</p>
-          <p className="text-[13px] text-muted">{household.name}</p>
+          {state.profile.name && <p className="text-[13px] text-muted">{state.profile.name}</p>}
           <p className="text-[13px] text-muted">{formatDate(session.shopped_at, true)}</p>
         </header>
         <div className="rule mt-3 pt-2">
-          {sorted.map((i) => {
+          {items.map((i) => {
             const unit = i.actual_price ?? i.estimated_price;
             const per = priceUnit(i.unit);
             return (
@@ -88,6 +85,13 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
                       <> (perkiraan {plain(toDisplayPrice(i.estimated_price, i.unit)!)})</>
                     )}
                   </p>
+                  {waiting.has(i.name.toLowerCase()) ? (
+                    <p className="text-[12px] text-muted">sudah di daftar</p>
+                  ) : (
+                    <button onClick={() => again([i.id])} className="-my-1 min-h-9 text-[13px] text-accent underline underline-offset-4">
+                      + Beli lagi
+                    </button>
+                  )}
                 </div>
               </div>
             );
@@ -115,12 +119,15 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
           )}
         </div>
         <div className="rule mt-3 pt-2 text-[13px] text-muted">
-          <p>Dibeli oleh: {memberName(session.shopper_id)}</p>
           {session.payment_method && <p>Bayar: {session.payment_method}</p>}
           <p>{session.item_count} barang</p>
           {session.notes && <p className="mt-1 font-sans text-ink">“{session.notes}”</p>}
         </div>
       </article>
+      <button className="btn btn-primary mt-4 w-full" onClick={() => again()}>Beli lagi semua</button>
+      <p className="mt-2 text-center text-[13px] text-muted">
+        Barang di nota ini masuk lagi ke daftar, dengan harga terakhir sebagai perkiraan.
+      </p>
     </div>
   );
 }

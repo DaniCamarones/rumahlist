@@ -1,40 +1,36 @@
 # RumahList
 
-Daftar belanja keluarga yang sinkron real-time di semua HP. Dibuat dengan Next.js + Supabase, bisa dipasang di HP sebagai aplikasi (PWA).
+Daftar belanja pribadi bergaya nota kasir. Data tersimpan **di HP sendiri**, tanpa akun dan tanpa server, dan aplikasi tetap jalan **tanpa internet**. Bisa dipasang di Android dan iPhone sebagai aplikasi web (PWA).
 
-## Fitur v1
-- Akun per anggota, buat keluarga, gabung pakai **kode undangan 6 karakter**
-- Peran: Pemilik, Admin, Anggota, Pemantau (hanya lihat)
-- **Daftar Belanja**: kategori, jumlah & satuan (kg, gram, liter, ml, pcs, … atau satuan sendiri), harga perkiraan, prioritas, penugasan, catatan, cari/filter, duplikat, hapus (dengan konfirmasi)
-- **Gambar 3D otomatis** per barang dari namanya (bawang putih, cabai, beras, …), dari [Microsoft Fluent Emoji](https://github.com/microsoft/fluentui-emoji) (MIT, lihat `public/icons/LICENSE.txt`). Tambah kata kunci di `lib/item-icon.ts`, gambarnya di `lib/icon-assets.ts`.
-- Barang dalam gram/ml diberi harga **per kg/per liter**, total dihitung otomatis
-- **Mode Belanja**: checkbox besar, isi harga asli, total berjalan, tombol "Habis", tanpa tombol hapus
-- **Selesai belanja** → tersimpan di **Riwayat** (toko, pembayar, total, selisih dari perkiraan)
-- Dashboard, aktivitas keluarga, pembagian tugas
-- Sinkron real-time, aman per keluarga (Row Level Security)
+## Fitur
+- **Daftar Belanja**: kategori, jumlah & satuan (kg, gram, liter, ml, pcs, … atau satuan sendiri), perkiraan harga, prioritas "segera", catatan, cari/filter, duplikat, hapus dengan konfirmasi.
+- **Katalog 343 barang** dan saran saat mengetik: ketuk, lalu kategori dan satuan terisi sendiri.
+- **Gambar 3D** per barang dari [Microsoft Fluent Emoji](https://github.com/microsoft/fluentui-emoji) (MIT, lihat `public/icons/LICENSE.txt`).
+- Barang dalam gram/ml diberi harga **per kg/per liter**.
+- **Mode Belanja**: kotak centang besar, isi harga asli, total berjalan, tombol "Habis".
+- **Riwayat** berupa nota. **Beli lagi** dari nota lama (harga terakhir jadi perkiraan), dan deretan **Pernah dibeli** di Daftar.
+- **Pengaturan**: nama, **Cadangkan** ke file JSON, **Pulihkan** dari file (juga untuk pindah HP), hapus semua data.
 
-## Menjalankan di komputer (untuk mencoba)
-Butuh Node.js dan Docker Desktop.
+## Pasang di HP
+Buka alamat aplikasinya sekali selagi ada internet:
+- **Android (Chrome)**: menu ⋮ → **Instal aplikasi** / **Tambahkan ke layar utama**.
+- **iPhone (Safari)**: tombol **Bagikan** → **Tambahkan ke Layar Utama** → **Tambah**.
 
+Setelah itu aplikasi jalan tanpa internet. Data tiap HP terpisah; pakai Cadangkan/Pulihkan untuk memindahkan.
+
+## Mengembangkan
 ```bash
 npm install
-npm run db:start     # menyalakan Supabase lokal
-npm run dev          # buka http://localhost:3000
+npm run dev        # http://localhost:3000 (tanpa offline cache)
+npm test
+npm run build      # hasil statis di out/ + out/sw.js
+node scripts/serve-out.mjs 3000   # uji hasil build, termasuk offline
 ```
 
-`.env.local` sudah berisi alamat Supabase lokal. Tes: `npm test`.
-
-## Dipakai keluarga (online)
-1. Buat proyek di [supabase.com](https://supabase.com) (region Singapore).
-2. Di **SQL Editor**, jalankan isi `supabase/migrations/20261125000000_init.sql`.
-3. Di **Authentication → Providers → Email**, matikan "Confirm email" (atau biarkan nyala kalau mau verifikasi email).
-4. Salin **Project URL** dan **publishable key** (Settings → API) ke `.env.local` (lihat `.env.example`).
-5. Online-kan, misalnya di [Vercel](https://vercel.com): impor repo, isi dua variabel yang sama.
-6. Di HP, buka alamatnya → menu browser → **Tambahkan ke Layar Utama**.
+Push ke `main` membangun dan memasang otomatis ke GitHub Pages (`.github/workflows/pages.yml`).
 
 ## Struktur
-- `app/(app)/` halaman utama (Beranda, Daftar, Riwayat, Keluarga); `app/(fokus)/belanja` Mode Belanja
-- `components/` komponen UI; `hooks/` data real-time
-- `lib/` format Rupiah, total, ikon barang, satuan harga
-- `supabase/migrations/` skema database + aturan keamanan
-- `docs/superpowers/` rancangan & rencana
+- `lib/local/state.ts`: semua aturan data (murni, teruji). `lib/local/persist.ts`: IndexedDB. `lib/local/store.ts`: data di memori.
+- `app/(app)/`: Beranda, Daftar, Riwayat, Pengaturan. `app/(fokus)/belanja`: Mode Belanja.
+- `scripts/build-sw.mjs`: membuat service worker yang menyimpan semua file untuk offline.
+- Versi keluarga dengan sinkron Supabase tersimpan di branch `keluarga-supabase`.

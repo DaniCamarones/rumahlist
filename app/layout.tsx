@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { AppProvider } from "@/components/app-provider";
+import { ServiceWorker } from "@/components/service-worker";
 import { ToastProvider } from "@/components/toast";
 import "./globals.css";
 
@@ -10,7 +12,7 @@ const plexSans = IBM_Plex_Sans({ variable: "--font-plex-sans", subsets: ["latin"
 
 export const metadata: Metadata = {
   title: "RumahList",
-  description: "Daftar belanja dan catatan rumah tangga untuk seluruh keluarga.",
+  description: "Daftar belanja pribadi yang tersimpan di HP dan jalan tanpa internet.",
   appleWebApp: { capable: true, title: "RumahList", statusBarStyle: "default" },
 };
 
@@ -21,11 +23,14 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id" className={`${plexMono.variable} ${plexSans.variable} h-full antialiased`}>
       <body className="min-h-full bg-counter font-sans">
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          <AppProvider>{children}</AppProvider>
+        </ToastProvider>
+        <ServiceWorker />
       </body>
     </html>
   );

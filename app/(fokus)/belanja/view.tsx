@@ -3,17 +3,13 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useHousehold } from "@/components/household-provider";
+import { useApp } from "@/components/app-provider";
 import { ItemIcon } from "@/components/item-icon";
 import { PriorityBadge, SlipCheck } from "@/components/item-row";
 import { Sheet } from "@/components/sheet";
-import { ListSkeleton } from "@/components/skeleton";
 import { useToast } from "@/components/toast";
-import { useShoppingItems } from "@/hooks/use-shopping-items";
 import { CATEGORIES, PAYMENT_METHODS } from "@/lib/constants";
 import { formatQty, formatRupiah, parseRupiah } from "@/lib/format";
-import { changeStatus, setActualPrice } from "@/lib/item-actions";
-import { errorText, supabase } from "@/lib/supabase/client";
 import { actualTotal, estimatedTotal } from "@/lib/totals";
 import { priceUnit, toDisplayPrice, toStoredPrice } from "@/lib/units";
 import type { ShoppingItem } from "@/lib/types";
@@ -21,18 +17,14 @@ import type { ShoppingItem } from "@/lib/types";
 const plain = (n: number) => formatRupiah(n).replace("Rp", "");
 
 export default function ShoppingModePage() {
-  const { household, userId, canEdit, memberName } = useHousehold();
-  const { items, loading, error, patchLocal, refetch } = useShoppingItems(household.id);
-  const toast = useToast();
+  const app = useApp();
+  const items = app.state.items;
   const router = useRouter();
-  const [onlyMine, setOnlyMine] = useState(false);
   const [finishOpen, setFinishOpen] = useState(false);
 
-  const pending = items.filter((i) => i.status === "pending" && (!onlyMine || i.assigned_to === userId));
-  const inCart = items.filter((i) => i.status === "purchased" && i.checked_by === userId);
-  const missing = items.filter((i) => i.status === "unavailable" && i.checked_by === userId);
-  const byOthers = items.filter((i) => i.status === "purchased" && i.checked_by !== userId);
-  const mineCount = items.filter((i) => i.status === "pending" && i.assigned_to === userId).length;
+  const pending = items.filter((i) => i.status === "pending");
+  const inCart = items.filter((i) => i.status === "purchased");
+  const missing = items.filter((i) => i.status === "unavailable");
 
   const groups = useMemo(
     () => CATEGORIES.map((c) => ({ ...c, items: pending.filter((i) => i.category === c.id) })).filter((g) => g.items.length),
@@ -43,27 +35,7 @@ export default function ShoppingModePage() {
   const remainingEstimate = estimatedTotal(pending);
   const totalCount = pending.length + inCart.length;
   const progress = totalCount ? inCart.length / totalCount : 0;
-
-  async function move(item: ShoppingItem, to: ShoppingItem["status"]) {
-    patchLocal(item.id, { status: to, checked_by: to === "pending" ? null : userId });
-    const res = await changeStatus(item, item.status, to, userId);
-    if (!res.ok) {
-      toast(res.reason === "conflict" ? `${item.name} sudah dicentang anggota lain` : errorText(res), "error");
-      refetch();
-    }
-  }
-
-  if (!canEdit) {
-    return (
-      <div className="grid min-h-dvh place-items-center p-6">
-        <div className="paper max-w-sm p-6">
-          <p className="font-mono font-semibold">Mode Belanja hanya untuk anggota yang bisa mengubah daftar.</p>
-          <p className="mt-1 text-sm text-muted">Minta Pemilik keluarga mengubah peranmu di menu Keluarga.</p>
-          <Link href="/" className="btn btn-ghost mt-4">Kembali ke beranda</Link>
-        </div>
-      </div>
-    );
-  }
+  const move = (item: ShoppingItem, to: ShoppingItem["status"]) => app.setStatus(item.id, to);
 
   return (
     <div className="mx-auto min-h-dvh max-w-2xl pb-40">
@@ -79,27 +51,10 @@ export default function ShoppingModePage() {
           aria-valuenow={Math.round(progress * 100)} aria-valuemin={0} aria-valuemax={100} aria-label="Progres belanja">
           <div className="h-full bg-ink transition-[width]" style={{ width: `${progress * 100}%` }} />
         </div>
-        {mineCount > 0 && (
-          <div className="mt-3 grid grid-cols-2 border-[1.5px] border-ink" role="group" aria-label="Tampilkan">
-            {[false, true].map((v) => (
-              <button key={String(v)} onClick={() => setOnlyMine(v)} aria-pressed={onlyMine === v}
-                className={`min-h-11 font-mono text-[14px] ${onlyMine === v ? "bg-ink text-white" : "bg-paper"}`}>
-                {v ? `Tugas saya (${mineCount})` : "Semua barang"}
-              </button>
-            ))}
-          </div>
-        )}
       </header>
 
       <div className="px-4">
-        {loading ? (
-          <ListSkeleton />
-        ) : error ? (
-          <div className="paper mt-6 p-5">
-            <p className="font-mono font-semibold">Daftar gagal dimuat.</p>
-            <button className="btn btn-ghost mt-3" onClick={refetch}>Coba lagi</button>
-          </div>
-        ) : pending.length === 0 && inCart.length === 0 ? (
+        {pending.length === 0 && inCart.length === 0 ? (
           <div className="paper torn mt-6 px-5 pt-6 pb-8">
             <p className="font-mono text-[17px] font-semibold">Tidak ada yang perlu dibeli</p>
             <p className="mt-1 text-muted">Tambahkan barang dulu di Daftar, lalu kembali ke sini.</p>
@@ -125,7 +80,6 @@ export default function ShoppingModePage() {
                               <span>{formatQty(i.quantity)} {i.unit}</span>
                               {i.estimated_price != null && <span>±{formatRupiah(i.estimated_price * i.quantity)}</span>}
                               <PriorityBadge priority={i.priority} />
-                              {i.assigned_to && i.assigned_to !== userId && <span>untuk {memberName(i.assigned_to)}</span>}
                             </span>
                             {i.notes && <span className="block font-sans text-[13px] text-muted">“{i.notes}”</span>}
                           </span>
@@ -148,8 +102,7 @@ export default function ShoppingModePage() {
             <h2 className="slip-heading">Keranjang ({inCart.length})</h2>
             <ul>
               {inCart.map((i) => (
-                <CartRow key={i.id} item={i} onUndo={() => move(i, "pending")}
-                  onPrice={(p) => patchLocal(i.id, { actual_price: p })} />
+                <CartRow key={i.id} item={i} onUndo={() => move(i, "pending")} onPrice={(p) => app.setPrice(i.id, p)} />
               ))}
             </ul>
             <div className="rule mt-1 flex items-end gap-2 pt-3 font-mono">
@@ -167,20 +120,13 @@ export default function ShoppingModePage() {
               {missing.map((i) => (
                 <li key={i.id} className="flex items-center gap-3 font-mono">
                   <span className="flex-1 text-muted line-through">{i.name}</span>
-                  <button onClick={() => move(i, "pending")}
-                    className="min-h-11 px-1 text-[14px] text-accent underline underline-offset-4">
+                  <button onClick={() => move(i, "pending")} className="min-h-11 px-1 text-[14px] text-accent underline underline-offset-4">
                     Ternyata ada
                   </button>
                 </li>
               ))}
             </ul>
           </section>
-        )}
-
-        {byOthers.length > 0 && (
-          <p className="mt-5 px-1 font-mono text-[13px] text-muted">
-            Sudah dibeli anggota lain: {byOthers.map((i) => i.name).join(", ")}.
-          </p>
         )}
       </div>
 
@@ -198,8 +144,7 @@ export default function ShoppingModePage() {
       </div>
 
       <Sheet open={finishOpen} title="Selesai belanja" onClose={() => setFinishOpen(false)}>
-        <FinishForm items={inCart} missingCount={missing.length}
-          onDone={(sid) => router.push(`/riwayat/${sid}`)} householdId={household.id} />
+        <FinishForm items={inCart} missingCount={missing.length} onDone={(sid) => router.push(`/riwayat/nota?id=${sid}`)} />
       </Sheet>
     </div>
   );
@@ -212,15 +157,12 @@ function CartRow({ item, onUndo, onPrice }: { item: ShoppingItem; onUndo: () => 
   const typed = value.trim() ? parseRupiah(value) : null;
   const parsed = typed === null ? null : toStoredPrice(typed, item.unit);
 
-  async function save() {
+  function save() {
     if (value.trim() && typed === null) {
       toast("Harga tidak dikenali. Contoh: 15000 atau 15rb", "error");
       return;
     }
-    if (parsed === item.actual_price) return;
-    onPrice(parsed);
-    const { error } = await setActualPrice(item.id, parsed);
-    if (error) toast(errorText(error), "error");
+    if (parsed !== item.actual_price) onPrice(parsed);
   }
 
   const unitPrice = parsed ?? item.estimated_price;
@@ -252,39 +194,35 @@ function CartRow({ item, onUndo, onPrice }: { item: ShoppingItem; onUndo: () => 
 function FinishForm({
   items: liveItems,
   missingCount,
-  householdId,
   onDone,
 }: {
   items: ShoppingItem[];
   missingCount: number;
-  householdId: string;
   onDone: (sessionId: string) => void;
 }) {
+  const app = useApp();
   const toast = useToast();
-  // Snapshot so the summary doesn't flip to "0 barang" when realtime clears the cart after saving.
+  // Snapshot so the summary doesn't flip to "0 barang" once the cart is cleared.
   const [items] = useState(liveItems);
   const [saved, setSaved] = useState(false);
   const [store, setStore] = useState("");
   const [payment, setPayment] = useState("Tunai");
   const [notes, setNotes] = useState("");
-  const [busy, setBusy] = useState(false);
   const est = estimatedTotal(items);
   const act = actualTotal(items);
   const noPrice = items.filter((i) => i.actual_price == null).length;
 
-  async function submit(e: React.FormEvent) {
+  function submit(e: React.FormEvent) {
     e.preventDefault();
-    setBusy(true);
-    const { data, error } = await supabase().rpc("finish_shopping_session", {
-      p_household: householdId, p_store: store, p_payment: payment, p_notes: notes,
-    });
-    if (error) {
-      setBusy(false);
-      return toast(errorText(error), "error");
+    if (saved) return;
+    try {
+      const sid = app.finish({ store, payment, notes });
+      setSaved(true);
+      toast("Belanja tersimpan di Riwayat");
+      onDone(sid);
+    } catch (err) {
+      toast((err as Error).message, "error");
     }
-    setSaved(true);
-    toast("Belanja tersimpan di Riwayat");
-    onDone(data as string);
   }
 
   return (
@@ -320,8 +258,8 @@ function FinishForm({
         <label className="label" htmlFor="notes">Catatan</label>
         <textarea id="notes" rows={2} className="field" value={notes} onChange={(e) => setNotes(e.target.value)} />
       </div>
-      <button className="btn btn-primary w-full" disabled={busy}>
-        {saved ? "Tersimpan, membuka riwayat…" : busy ? "Menyimpan…" : "Simpan ke riwayat"}
+      <button className="btn btn-primary w-full" disabled={saved}>
+        {saved ? "Tersimpan, membuka riwayat…" : "Simpan ke riwayat"}
       </button>
     </form>
   );

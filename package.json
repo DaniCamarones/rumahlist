@@ -4,23 +4,23 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/build-sw.mjs",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
     "db:start": "supabase start -x imgproxy,mailpit,studio,edge-runtime,logflare,vector,supavisor,postgres-meta",
     "db:reset": "supabase db reset",
-    "db:stop": "supabase stop"
+    "db:stop": "supabase stop",
+    "preview": "npx --yes serve@14.2.4 out -l 4173"
   },
   "dependencies": {
-    "@supabase/ssr": "^0.12.7",
-    "@supabase/supabase-js": "^2.119.2",
     "lucide-react": "^1.80.0",
     "next": "16.4.6",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@supabase/supabase-js": "^2.119.2",
     "@tailwindcss/turbopack": "4.3.3",
     "@types/node": "^24.19.2",
     "@types/react": "^19",

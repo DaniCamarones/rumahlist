@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useHousehold } from "./household-provider";
+import { useApp } from "./app-provider";
 
 // Navigation is a row of printed register keys: text labels, no icon set.
 const LINKS = [
@@ -10,10 +10,11 @@ const LINKS = [
   { href: "/daftar", label: "Daftar" },
   { href: "/belanja", label: "Belanja" },
   { href: "/riwayat", label: "Riwayat" },
-  { href: "/keluarga", label: "Keluarga" },
+  { href: "/pengaturan", label: "Atur" },
 ];
 
-const isActive = (path: string, href: string) => (href === "/" ? path === "/" : path.startsWith(href));
+const clean = (p: string) => (p.length > 1 ? p.replace(/\/$/, "") : p);
+const isActive = (path: string, href: string) => (href === "/" ? clean(path) === "/" : clean(path).startsWith(href));
 
 export function Wordmark({ sub }: { sub?: string }) {
   return (
@@ -26,29 +27,23 @@ export function Wordmark({ sub }: { sub?: string }) {
 
 export function Sidebar() {
   const path = usePathname();
-  const { household, me } = useHousehold();
+  const { state } = useApp();
   return (
     <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col px-5 py-7 md:flex">
-      <Wordmark sub={household.name} />
+      <Wordmark sub={state.profile.name ? `Milik ${state.profile.name}` : "Tersimpan di perangkat ini"} />
       <nav className="mt-8 flex flex-col gap-1.5" aria-label="Utama">
         {LINKS.map(({ href, label }) => {
           const active = isActive(path, href);
           return (
             <Link key={href} href={href} aria-current={active ? "page" : undefined}
               className={`flex min-h-11 items-center px-3 font-mono text-[15px] uppercase ${
-                active
-                  ? href === "/belanja" ? "bg-accent text-white" : "bg-ink text-white"
-                  : "text-ink hover:bg-paper"
+                active ? (href === "/belanja" ? "bg-accent text-white" : "bg-ink text-white") : "text-ink hover:bg-paper"
               }`}>
-              {label}
+              {label === "Atur" ? "Pengaturan" : label}
             </Link>
           );
         })}
       </nav>
-      <div className="mt-auto flex items-center gap-3 border-t border-dashed border-ink/40 pt-4">
-        <Avatar name={me.display_name} />
-        <p className="truncate text-sm font-semibold">{me.display_name}</p>
-      </div>
     </aside>
   );
 }
@@ -74,17 +69,5 @@ export function BottomNav() {
         })}
       </ul>
     </nav>
-  );
-}
-
-/** Initial in a small printed box; no generated photos. */
-export function Avatar({ name, size = "md" }: { name: string; size?: "sm" | "md" }) {
-  return (
-    <span aria-hidden
-      className={`grid shrink-0 place-items-center border-[1.5px] border-ink bg-paper font-mono font-semibold ${
-        size === "sm" ? "size-6 text-[11px]" : "size-9 text-sm"
-      }`}>
-      {name.trim().charAt(0).toUpperCase() || "?"}
-    </span>
   );
 }

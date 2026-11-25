@@ -3,7 +3,6 @@
 import { Check } from "lucide-react";
 import { formatQty, formatRupiah } from "@/lib/format";
 import type { ShoppingItem } from "@/lib/types";
-import { useHousehold } from "./household-provider";
 import { ItemIcon } from "./item-icon";
 
 /** Printed tag on a receipt line. Only "segera" uses red, because it changes what gets bought first. */
@@ -32,16 +31,7 @@ export function SlipCheck({ checked, size = "md" }: { checked: boolean; size?: "
   );
 }
 
-export function ItemRow({
-  item,
-  onToggle,
-  onMenu,
-}: {
-  item: ShoppingItem;
-  onToggle: () => void;
-  onMenu: () => void;
-}) {
-  const { canEdit, memberName } = useHousehold();
+export function ItemRow({ item, onToggle, onMenu }: { item: ShoppingItem; onToggle: () => void; onMenu: () => void }) {
   const done = item.status !== "pending";
   const checked = item.status === "purchased";
   const price = item.actual_price ?? item.estimated_price;
@@ -50,7 +40,7 @@ export function ItemRow({
     <li className="flex items-start gap-2.5 py-2.5">
       <button
         onClick={onToggle}
-        disabled={!canEdit || item.status === "unavailable" || item.status === "cancelled"}
+        disabled={item.status === "unavailable" || item.status === "cancelled"}
         role="checkbox"
         aria-checked={checked}
         aria-label={checked ? `Batalkan centang ${item.name}` : `Centang ${item.name}`}
@@ -73,18 +63,14 @@ export function ItemRow({
           <span>{formatQty(item.quantity)} {item.unit}</span>
           <PriorityBadge priority={item.priority} />
           {STATUS_TAG[item.status] && <span className="font-semibold text-warn-ink">{STATUS_TAG[item.status]}</span>}
-          {item.assigned_to && <span>untuk {memberName(item.assigned_to)}</span>}
-          {checked && item.checked_by && <span>dibeli {memberName(item.checked_by)}</span>}
         </p>
         {item.notes && <p className="mt-0.5 font-sans text-[13px] text-muted">“{item.notes}”</p>}
       </div>
 
-      {canEdit && (
-        <button onClick={onMenu} aria-label={`Pilihan untuk ${item.name}`}
-          className="-my-2 -mr-2 grid size-11 shrink-0 place-items-center font-mono text-[18px] text-muted hover:bg-counter">
-          <span aria-hidden>⋯</span>
-        </button>
-      )}
+      <button onClick={onMenu} aria-label={`Pilihan untuk ${item.name}`}
+        className="-my-2 -mr-2 grid size-11 shrink-0 place-items-center font-mono text-[18px] text-muted hover:bg-counter">
+        <span aria-hidden>⋯</span>
+      </button>
     </li>
   );
 }
