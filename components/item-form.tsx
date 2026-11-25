@@ -120,34 +120,35 @@ export function ItemForm({ item, prefill, onDone }: { item?: ShoppingItem; prefi
       )}
 
       <div>
-        <label className="label" htmlFor="f-qty">Jumlah</label>
-        <input id="f-qty" inputMode="decimal" autoFocus={isNew && !!d.name} className="field font-mono text-[18px]"
-          placeholder="Kosongkan kalau belum tahu" value={d.quantity} onChange={(e) => set("quantity", e.target.value)} />
-        <p className="mt-1 text-[13px] text-muted">Belum tahu berapa? Kosongkan saja, isi nanti saat belanja.</p>
-      </div>
-
-      <fieldset>
-        <legend className="label">Satuan</legend>
-        <div className="flex flex-wrap gap-1.5">
-          {UNITS.map((u) => (
-            <Pill key={u} active={d.unit === u} onClick={() => set("unit", u)}>{u}</Pill>
-          ))}
-          <Pill active={d.unit === "__custom"} onClick={() => set("unit", "__custom")}>lainnya…</Pill>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="label" htmlFor="f-qty">Jumlah</label>
+            <input id="f-qty" inputMode="decimal" autoFocus={isNew && !!d.name} className="field font-mono text-[17px]"
+              placeholder="belum tahu" value={d.quantity} onChange={(e) => set("quantity", e.target.value)} />
+          </div>
+          <div>
+            <label className="label" htmlFor="f-unit">Satuan</label>
+            <select id="f-unit" className="field" value={d.unit} onChange={(e) => set("unit", e.target.value)}>
+              {!d.unit && <option value="">Pilih satuan</option>}
+              {UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
+              <option value="__custom">Lainnya…</option>
+            </select>
+          </div>
         </div>
+        <p className="mt-1 text-[13px] text-muted">Belum tahu berapa? Kosongkan jumlahnya, isi nanti saat belanja.</p>
         {d.unit === "__custom" && (
           <input aria-label="Satuan lain" placeholder="mis. renteng, karung, papan" maxLength={20} className="field mt-2"
             value={d.customUnit} onChange={(e) => set("customUnit", e.target.value)} />
         )}
-      </fieldset>
+      </div>
 
-      <fieldset>
-        <legend className="label">Kategori</legend>
-        <div className="flex flex-wrap gap-1.5">
-          {CATEGORIES.map((c) => (
-            <Pill key={c.id} active={d.category === c.id} onClick={() => set("category", c.id)}>{c.label}</Pill>
-          ))}
-        </div>
-      </fieldset>
+      <div>
+        <label className="label" htmlFor="f-cat">Kategori</label>
+        <select id="f-cat" className="field" value={d.category} onChange={(e) => set("category", e.target.value)}>
+          {!d.category && <option value="">Pilih kategori</option>}
+          {CATEGORIES.map((c) => <option key={c.id} value={c.id}>{c.emoji} {c.label}</option>)}
+        </select>
+      </div>
 
       <div>
         <label className="label" htmlFor="f-price">Perkiraan harga per {per.label} (boleh kosong)</label>
@@ -186,16 +187,5 @@ export function ItemForm({ item, prefill, onDone }: { item?: ShoppingItem; prefi
       {error && <p role="alert" className="bg-danger-soft px-3 py-2 text-sm text-danger">{error}</p>}
       <button className="btn btn-primary w-full">{item ? "Simpan perubahan" : "Tambah ke daftar"}</button>
     </form>
-  );
-}
-
-function Pill({ active, onClick, children }: { active: boolean; onClick: () => void; children: React.ReactNode }) {
-  return (
-    <button type="button" onClick={onClick} aria-pressed={active}
-      className={`min-h-11 border-[1.5px] px-3 font-mono text-[14px] ${
-        active ? "border-ink bg-ink text-white" : "border-ink/35 bg-paper text-ink hover:border-ink"
-      }`}>
-      {children}
-    </button>
   );
 }
