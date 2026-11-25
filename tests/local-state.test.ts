@@ -3,6 +3,7 @@ import {
   addItem,
   buyAgain,
   frequentItems,
+  lastPurchase,
   deleteItem,
   duplicateItem,
   emptyState,
@@ -25,8 +26,16 @@ describe("items", () => {
   it("adds an item with defaults and trims the name", () => {
     const c = ctx();
     const { state, item } = addItem(emptyState(), { name: "  Beras " }, c);
-    expect(item).toMatchObject({ name: "Beras", category: "other", unit: "pcs", quantity: 1, status: "pending", priority: "normal" });
+    expect(item).toMatchObject({ name: "Beras", category: "other", unit: "pcs", quantity: null, status: "pending", priority: "normal" });
     expect(state.items).toHaveLength(1);
+  });
+
+  it("allows leaving the quantity open until shopping, and setting it later", () => {
+    const c = ctx();
+    const added = addItem(emptyState(), { name: "Ayam", unit: "kg", quantity: null }, c);
+    expect(added.item.quantity).toBeNull();
+    const state = updateItem(added.state, added.item.id, { quantity: 0.8 }, c);
+    expect(state.items[0].quantity).toBe(0.8);
   });
 
   it("rejects an empty name or non-positive quantity", () => {
@@ -89,6 +98,13 @@ describe("finishSession", () => {
       ["Telur", "pending"],
       ["Gula", "pending"],
     ]);
+  });
+
+  it("asks for the quantity of cart items that still have none", () => {
+    const c = ctx();
+    const r = addItem(emptyState(), { name: "Ayam", unit: "kg" }, c);
+    const s = setStatus(r.state, r.item.id, "purchased", c);
+    expect(() => finishSession(s, { store: "", payment: "", notes: "" }, c)).toThrow("Isi jumlah dulu: Ayam");
   });
 
   it("refuses to finish with nothing checked", () => {
@@ -160,5 +176,24 @@ describe("buy again", () => {
     expect(frequentItems(state).map((f) => f.name)).toEqual(["Bawang putih", "Beras"]);
     state = addItem(state, { name: "beras" }, c).state;
     expect(frequentItems(state).map((f) => f.name)).toEqual(["Bawang putih"]);
+  });
+});
+
+describe("lastPurchase", () => {
+  it("returns the most recent receipt line for a name, ignoring case", () => {
+    const c = ctx();
+    let s = emptyState();
+    for (const [qty, price] of [[250, 40], [500, 38]] as const) {
+      const r = addItem(s, { name: "Bawang putih", quantity: qty, unit: "gram", category: "spice" }, c);
+      s = setActualPrice(setStatus(r.state, r.item.id, "purchased", c), r.item.id, price, c);
+      s = finishSession(s, { store: "", payment: "", notes: "" }, c).state;
+    }
+    const last = lastPurchase(s, "  BAWANG putih ");
+    expect(last).toMatchObject({ quantity: 500, unit: "gram", category: "spice", price: 38 });
+    expect(last?.shopped_at).toBe(s.sessions[0].shopped_at);
+  });
+
+  it("returns null for something never bought", () => {
+    expect(lastPurchase(emptyState(), "Gula")).toBeNull();
   });
 });

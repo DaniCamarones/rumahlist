@@ -1,7 +1,7 @@
 "use client";
 
 import { Check } from "lucide-react";
-import { formatQty, formatRupiah } from "@/lib/format";
+import { formatAmount, formatRupiah } from "@/lib/format";
 import type { ShoppingItem } from "@/lib/types";
 import { ItemIcon } from "./item-icon";
 
@@ -31,7 +31,17 @@ export function SlipCheck({ checked, size = "md" }: { checked: boolean; size?: "
   );
 }
 
-export function ItemRow({ item, onToggle, onMenu }: { item: ShoppingItem; onToggle: () => void; onMenu: () => void }) {
+export function ItemRow({
+  item,
+  onToggle,
+  onEdit,
+  onMenu,
+}: {
+  item: ShoppingItem;
+  onToggle: () => void;
+  onEdit: () => void;
+  onMenu: () => void;
+}) {
   const done = item.status !== "pending";
   const checked = item.status === "purchased";
   const price = item.actual_price ?? item.estimated_price;
@@ -49,23 +59,27 @@ export function ItemRow({ item, onToggle, onMenu }: { item: ShoppingItem; onTogg
         <SlipCheck checked={checked} />
       </button>
 
-      <span className={done ? "opacity-45" : ""}><ItemIcon name={item.name} category={item.category} size="sm" /></span>
-
-      <div className="min-w-0 flex-1 font-mono">
-        <div className="flex items-end gap-1.5">
-          <span className={`min-w-0 text-[15px] leading-snug font-medium ${done ? "text-muted line-through" : ""}`}>{item.name}</span>
-          <span className="leader" />
-          <span className={`shrink-0 text-[15px] tabular-nums ${done ? "text-muted" : ""}`}>
-            {price != null ? formatRupiah(price * item.quantity).replace("Rp", "") : "–"}
+      <button onClick={onEdit} aria-label={`Ubah ${item.name}`}
+        className="-my-1 flex min-w-0 flex-1 items-start gap-2.5 py-1 text-left hover:bg-counter/60">
+        <span className={done ? "opacity-45" : ""}><ItemIcon name={item.name} category={item.category} size="sm" /></span>
+        <span className="block min-w-0 flex-1 font-mono">
+          <span className="flex items-end gap-1.5">
+            <span className={`min-w-0 text-[15px] leading-snug font-medium ${done ? "text-muted line-through" : ""}`}>{item.name}</span>
+            <span className="leader" />
+            <span className={`shrink-0 text-[15px] tabular-nums ${done ? "text-muted" : ""}`}>
+              {price != null && item.quantity !== null ? formatRupiah(price * item.quantity).replace("Rp", "") : "–"}
+            </span>
           </span>
-        </div>
-        <p className="mt-0.5 flex flex-wrap gap-x-2 text-[12.5px] text-muted">
-          <span>{formatQty(item.quantity)} {item.unit}</span>
-          <PriorityBadge priority={item.priority} />
-          {STATUS_TAG[item.status] && <span className="font-semibold text-warn-ink">{STATUS_TAG[item.status]}</span>}
-        </p>
-        {item.notes && <p className="mt-0.5 font-sans text-[13px] text-muted">“{item.notes}”</p>}
-      </div>
+          <span className="mt-0.5 flex flex-wrap gap-x-2 text-[12.5px] text-muted">
+            <span className={item.quantity === null ? "font-semibold text-warn-ink" : ""}>
+              {formatAmount(item.quantity, item.unit)}
+            </span>
+            <PriorityBadge priority={item.priority} />
+            {STATUS_TAG[item.status] && <span className="font-semibold text-warn-ink">{STATUS_TAG[item.status]}</span>}
+          </span>
+          {item.notes && <span className="mt-0.5 block font-sans text-[13px] text-muted">“{item.notes}”</span>}
+        </span>
+      </button>
 
       <button onClick={onMenu} aria-label={`Pilihan untuk ${item.name}`}
         className="-my-2 -mr-2 grid size-11 shrink-0 place-items-center font-mono text-[18px] text-muted hover:bg-counter">

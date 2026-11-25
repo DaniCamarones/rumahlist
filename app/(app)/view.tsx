@@ -4,7 +4,7 @@ import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useApp } from "@/components/app-provider";
 import { ItemIcon } from "@/components/item-icon";
-import { formatDate, formatQty, formatRupiah } from "@/lib/format";
+import { formatAmount, formatDate, formatRupiah } from "@/lib/format";
 import { estimatedTotal } from "@/lib/totals";
 
 function greeting() {
@@ -62,7 +62,7 @@ export default function HomePage() {
               <li key={i.id} className="flex items-center gap-2.5 py-2 font-mono">
                 <ItemIcon name={i.name} category={i.category} size="sm" />
                 <span className="flex-1 text-[15px] font-medium">{i.name}</span>
-                <span className="text-[13px] text-muted">{formatQty(i.quantity)} {i.unit}</span>
+                <span className="text-[13px] text-muted">{formatAmount(i.quantity, i.unit)}</span>
               </li>
             ))}
           </ul>

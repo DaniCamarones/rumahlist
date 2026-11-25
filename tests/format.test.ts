@@ -27,3 +27,11 @@ describe("parseRupiah", () => {
     expect(parseRupiah("-5000")).toBeNull();
   });
 });
+
+describe("formatAmount", () => {
+  it("shows a question mark until the quantity is known", async () => {
+    const { formatAmount } = await import("@/lib/format");
+    expect(formatAmount(null, "kg")).toBe("? kg");
+    expect(formatAmount(0.5, "kg")).toBe("0,5 kg");
+  });
+});

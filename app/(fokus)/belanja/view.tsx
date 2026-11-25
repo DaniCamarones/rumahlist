@@ -9,7 +9,7 @@ import { PriorityBadge, SlipCheck } from "@/components/item-row";
 import { Sheet } from "@/components/sheet";
 import { useToast } from "@/components/toast";
 import { CATEGORIES, PAYMENT_METHODS } from "@/lib/constants";
-import { formatQty, formatRupiah, parseRupiah } from "@/lib/format";
+import { formatAmount, formatRupiah, parseRupiah } from "@/lib/format";
 import { actualTotal, estimatedTotal } from "@/lib/totals";
 import { priceUnit, toDisplayPrice, toStoredPrice } from "@/lib/units";
 import type { ShoppingItem } from "@/lib/types";
@@ -77,8 +77,8 @@ export default function ShoppingModePage() {
                           <span className="min-w-0 flex-1 font-mono">
                             <span className="block text-[17px] leading-snug font-medium">{i.name}</span>
                             <span className="flex flex-wrap gap-x-2 text-[13px] text-muted">
-                              <span>{formatQty(i.quantity)} {i.unit}</span>
-                              {i.estimated_price != null && <span>±{formatRupiah(i.estimated_price * i.quantity)}</span>}
+                              <span>{formatAmount(i.quantity, i.unit)}</span>
+                              {i.estimated_price != null && i.quantity !== null && <span>±{formatRupiah(i.estimated_price * i.quantity)}</span>}
                               <PriorityBadge priority={i.priority} />
                             </span>
                             {i.notes && <span className="block font-sans text-[13px] text-muted">“{i.notes}”</span>}
@@ -102,7 +102,8 @@ export default function ShoppingModePage() {
             <h2 className="slip-heading">Keranjang ({inCart.length})</h2>
             <ul>
               {inCart.map((i) => (
-                <CartRow key={i.id} item={i} onUndo={() => move(i, "pending")} onPrice={(p) => app.setPrice(i.id, p)} />
+                <CartRow key={i.id} item={i} onUndo={() => move(i, "pending")} onPrice={(p) => app.setPrice(i.id, p)}
+                  onQty={(q) => app.update(i.id, { quantity: q })} />
               ))}
             </ul>
             <div className="rule mt-1 flex items-end gap-2 pt-3 font-mono">
@@ -150,14 +151,27 @@ export default function ShoppingModePage() {
   );
 }
 
-function CartRow({ item, onUndo, onPrice }: { item: ShoppingItem; onUndo: () => void; onPrice: (p: number | null) => void }) {
+/** A cart line: the real quantity and price are typed here, at the stall. */
+function CartRow({
+  item,
+  onUndo,
+  onPrice,
+  onQty,
+}: {
+  item: ShoppingItem;
+  onUndo: () => void;
+  onPrice: (p: number | null) => void;
+  onQty: (q: number | null) => void;
+}) {
   const toast = useToast();
   const per = priceUnit(item.unit);
   const [value, setValue] = useState(item.actual_price != null ? String(toDisplayPrice(item.actual_price, item.unit)) : "");
+  const [qtyValue, setQtyValue] = useState(item.quantity != null ? String(item.quantity).replace(".", ",") : "");
   const typed = value.trim() ? parseRupiah(value) : null;
   const parsed = typed === null ? null : toStoredPrice(typed, item.unit);
+  const qtyNum = qtyValue.trim() ? Number(qtyValue.trim().replace(",", ".")) : null;
 
-  function save() {
+  function savePrice() {
     if (value.trim() && typed === null) {
       toast("Harga tidak dikenali. Contoh: 15000 atau 15rb", "error");
       return;
@@ -165,28 +179,49 @@ function CartRow({ item, onUndo, onPrice }: { item: ShoppingItem; onUndo: () => 
     if (parsed !== item.actual_price) onPrice(parsed);
   }
 
+  function saveQty() {
+    if (qtyNum !== null && !(qtyNum > 0)) {
+      toast("Jumlah harus angka lebih dari 0", "error");
+      return;
+    }
+    if (qtyNum !== item.quantity) onQty(qtyNum);
+  }
+
   const unitPrice = parsed ?? item.estimated_price;
+  const blur = (e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && e.currentTarget.blur();
   return (
-    <li className="flex items-center gap-2.5 py-2.5">
-      <button onClick={onUndo} role="checkbox" aria-checked aria-label={`Keluarkan ${item.name} dari keranjang`}
-        className="-m-1 grid size-11 shrink-0 place-items-center">
-        <SlipCheck checked />
-      </button>
-      <div className="min-w-0 flex-1 font-mono">
-        <p className="truncate text-[15px] font-medium">{item.name}</p>
-        <p className="text-[12.5px] text-muted">
-          {formatQty(item.quantity)} {item.unit}
-          {unitPrice != null && <> = {formatRupiah(unitPrice * item.quantity)}</>}
+    <li className="py-2.5">
+      <div className="flex items-center gap-2.5">
+        <button onClick={onUndo} role="checkbox" aria-checked aria-label={`Keluarkan ${item.name} dari keranjang`}
+          className="-m-1 grid size-11 shrink-0 place-items-center">
+          <SlipCheck checked />
+        </button>
+        <p className="flex min-w-0 flex-1 items-end gap-1.5 font-mono">
+          <span className="truncate text-[15px] font-medium">{item.name}</span>
+          <span className="leader" />
+          <span className="shrink-0 text-[15px] tabular-nums">
+            {unitPrice != null && item.quantity != null ? plain(unitPrice * item.quantity) : "–"}
+          </span>
         </p>
       </div>
-      <label className="w-[8.5rem] shrink-0">
-        <span className="sr-only">Harga asli per {per.label} untuk {item.name}</span>
-        <input inputMode="numeric" enterKeyHint="done" className="field min-h-11 text-right font-mono tabular-nums"
-          placeholder={item.estimated_price != null ? plain(toDisplayPrice(item.estimated_price, item.unit)!) : "harga"}
-          value={value} onChange={(e) => setValue(e.target.value)} onBlur={save}
-          onKeyDown={(e) => e.key === "Enter" && (e.currentTarget as HTMLInputElement).blur()} />
-        <span className="mt-0.5 block text-right font-mono text-[11px] text-muted">Rp per {per.label}</span>
-      </label>
+      <div className="mt-1.5 grid grid-cols-2 gap-2 pl-[2.6rem]">
+        <label>
+          <span className="sr-only">Jumlah {item.name}</span>
+          <input inputMode="decimal" enterKeyHint="done"
+            className={`field min-h-11 text-right font-mono tabular-nums ${item.quantity === null ? "border-danger" : ""}`}
+            placeholder="jumlah" value={qtyValue} onChange={(e) => setQtyValue(e.target.value)} onBlur={saveQty} onKeyDown={blur} />
+          <span className={`mt-0.5 block text-right font-mono text-[11px] ${item.quantity === null ? "font-semibold text-danger" : "text-muted"}`}>
+            {item.quantity === null ? `isi jumlah (${item.unit})` : item.unit}
+          </span>
+        </label>
+        <label>
+          <span className="sr-only">Harga asli per {per.label} untuk {item.name}</span>
+          <input inputMode="numeric" enterKeyHint="done" className="field min-h-11 text-right font-mono tabular-nums"
+            placeholder={item.estimated_price != null ? plain(toDisplayPrice(item.estimated_price, item.unit)!) : "harga"}
+            value={value} onChange={(e) => setValue(e.target.value)} onBlur={savePrice} onKeyDown={blur} />
+          <span className="mt-0.5 block text-right font-mono text-[11px] text-muted">Rp per {per.label}</span>
+        </label>
+      </div>
     </li>
   );
 }
@@ -211,6 +246,7 @@ function FinishForm({
   const est = estimatedTotal(items);
   const act = actualTotal(items);
   const noPrice = items.filter((i) => i.actual_price == null).length;
+  const noQty = items.filter((i) => i.quantity === null).map((i) => i.name);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -237,6 +273,11 @@ function FinishForm({
         {noPrice > 0 && <p className="mt-2 font-sans text-[13px] text-muted">{noPrice} barang belum diisi harga asli, dihitung pakai harga perkiraan.</p>}
         {missingCount > 0 && <p className="mt-1 font-sans text-[13px] text-muted">{missingCount} barang tidak ada di toko akan kembali ke daftar.</p>}
       </div>
+      {noQty.length > 0 && (
+        <p role="alert" className="bg-danger-soft px-3 py-2 text-sm text-danger">
+          Isi jumlah dulu di keranjang untuk: <b>{noQty.join(", ")}</b>. Tutup lembar ini, isi kolom jumlah, lalu tekan Selesai lagi.
+        </p>
+      )}
       <div>
         <label className="label" htmlFor="store">Toko / pasar</label>
         <input id="store" placeholder="mis. Pasar Minggu, Indomaret" className="field" value={store} onChange={(e) => setStore(e.target.value)} />
@@ -258,7 +299,7 @@ function FinishForm({
         <label className="label" htmlFor="notes">Catatan</label>
         <textarea id="notes" rows={2} className="field" value={notes} onChange={(e) => setNotes(e.target.value)} />
       </div>
-      <button className="btn btn-primary w-full" disabled={saved}>
+      <button className="btn btn-primary w-full" disabled={saved || noQty.length > 0}>
         {saved ? "Tersimpan, membuka riwayat…" : "Simpan ke riwayat"}
       </button>
     </form>

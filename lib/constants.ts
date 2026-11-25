@@ -21,7 +21,7 @@ export function categoryOf(id: string) {
 }
 
 export const UNITS = [
-  "kg", "gram", "liter", "ml", "pcs", "pack", "botol", "dus", "ikat", "sisir", "butir", "bungkus",
+  "gram", "ons", "kg", "ml", "liter", "pcs", "butir", "ikat", "sisir", "bungkus", "pack", "botol", "dus",
 ];
 
 export const PRIORITIES: { id: Priority; label: string; rank: number }[] = [

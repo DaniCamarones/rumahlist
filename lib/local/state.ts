@@ -21,22 +21,23 @@ export const emptyState = (): AppState => ({ version: 1, profile: { name: "" }, 
 export type ItemInput = {
   name: string;
   category?: string;
-  quantity?: number;
+  /** null = not decided yet; filled in while shopping. */
+  quantity?: number | null;
   unit?: string;
   estimated_price?: number | null;
   priority?: Priority;
   notes?: string | null;
 };
 
-function validate(name: string, quantity: number) {
+function validate(name: string, quantity: number | null) {
   if (!name) throw new Error("Nama barang wajib diisi");
   if (name.length > 80) throw new Error("Nama barang terlalu panjang");
-  if (!(quantity > 0)) throw new Error("Jumlah harus lebih dari 0");
+  if (quantity !== null && !(quantity > 0)) throw new Error("Jumlah harus lebih dari 0");
 }
 
 export function addItem(state: AppState, input: ItemInput, ctx: Ctx = defaultCtx): { state: AppState; item: ShoppingItem } {
   const name = input.name.trim();
-  const quantity = input.quantity ?? 1;
+  const quantity = input.quantity ?? null;
   validate(name, quantity);
   const now = ctx.now();
   const item: ShoppingItem = {
@@ -67,7 +68,7 @@ export function updateItem(state: AppState, id: string, input: Partial<ItemInput
   const current = state.items.find((i) => i.id === id);
   if (!current) throw new Error("Barang tidak ditemukan");
   const name = input.name !== undefined ? input.name.trim() : current.name;
-  const quantity = input.quantity ?? current.quantity;
+  const quantity = input.quantity !== undefined ? input.quantity : current.quantity;
   validate(name, quantity);
   return patchItem(
     state,
@@ -110,8 +111,11 @@ export function finishSession(
   input: { store: string; payment: string; notes: string },
   ctx: Ctx = defaultCtx,
 ): { state: AppState; sessionId: string } {
-  const bought = state.items.filter((i) => i.status === "purchased");
-  if (bought.length === 0) throw new Error("Belum ada barang yang dicentang");
+  const checked = state.items.filter((i) => i.status === "purchased");
+  if (checked.length === 0) throw new Error("Belum ada barang yang dicentang");
+  const noQty = checked.filter((i) => i.quantity === null);
+  if (noQty.length) throw new Error(`Isi jumlah dulu: ${noQty.map((i) => i.name).join(", ")}`);
+  const bought = checked as (ShoppingItem & { quantity: number })[];
 
   const sessionId = ctx.id();
   const session: ShoppingSession = {
@@ -175,6 +179,24 @@ export function buyAgain(
     ).state;
   }
   return { state: next, added: lines.length };
+}
+
+/** The most recent time this item (by name, any case) was bought, or null if never. */
+export function lastPurchase(
+  state: AppState,
+  name: string,
+): { quantity: number; unit: string; category: string; price: number | null; shopped_at: string } | null {
+  const key = name.trim().toLowerCase();
+  const when = new Map(state.sessions.map((s) => [s.id, s.shopped_at]));
+  let best: { line: SessionItem; at: string } | null = null;
+  for (const line of state.sessionItems) {
+    if (line.name.toLowerCase() !== key) continue;
+    const at = when.get(line.session_id) ?? "";
+    if (!best || at >= best.at) best = { line, at };
+  }
+  if (!best) return null;
+  const { line, at } = best;
+  return { quantity: line.quantity, unit: line.unit, category: line.category, price: lastPrice(line), shopped_at: at };
 }
 
 export type FrequentItem = {

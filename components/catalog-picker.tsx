@@ -6,35 +6,24 @@ import { CATALOG, searchCatalog, type CatalogItem } from "@/lib/catalog";
 import { CATEGORIES } from "@/lib/constants";
 import { ItemIcon } from "./item-icon";
 
-/** Grid of catalog items by category; one tap adds an item to the list. */
+/** Grid of catalog items by category; tapping one opens the item form for it. */
 export function CatalogPicker({
   inList,
-  onAdd,
+  onPick,
   initialCategory,
 }: {
   inList: Set<string>;
-  onAdd: (item: CatalogItem) => Promise<boolean>;
+  onPick: (item: CatalogItem) => void;
   initialCategory?: string | null;
 }) {
-  const [category, setCategory] = useState(initialCategory ?? "vegetable");
+  const [category, setCategory] = useState(initialCategory && initialCategory !== "other" ? initialCategory : "vegetable");
   const [query, setQuery] = useState("");
-  const [pending, setPending] = useState<string | null>(null);
-  const [added, setAdded] = useState<Set<string>>(new Set());
 
   const items = useMemo(
     () => (query.trim() ? searchCatalog(query, 60) : CATALOG.filter((i) => i.category === category)),
     [query, category],
   );
   const cats = CATEGORIES.filter((c) => c.id !== "other");
-
-  async function tap(item: CatalogItem) {
-    const key = item.name.toLowerCase();
-    if (inList.has(key) || added.has(key) || pending) return;
-    setPending(key);
-    const ok = await onAdd(item);
-    setPending(null);
-    if (ok) setAdded((s) => new Set(s).add(key));
-  }
 
   return (
     <div>
@@ -56,17 +45,16 @@ export function CatalogPicker({
 
       {items.length === 0 ? (
         <p className="mt-6 text-center text-sm text-muted">
-          Tidak ada di katalog. Tutup ini dan ketik namanya di kolom Tambah untuk menambah manual.
+          Tidak ada di katalog. Tutup ini dan ketik namanya di kolom atas untuk menambah manual.
         </p>
       ) : (
         <ul className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4">
           {items.map((item) => {
-            const key = item.name.toLowerCase();
-            const done = inList.has(key) || added.has(key);
+            const done = inList.has(item.name.toLowerCase());
             return (
               <li key={item.name}>
-                <button onClick={() => tap(item)} aria-pressed={done} disabled={pending === key}
-                  aria-label={done ? `${item.name}, sudah di daftar` : `Tambah ${item.name}`}
+                <button onClick={() => onPick(item)}
+                  aria-label={done ? `${item.name}, sudah di daftar. Ubah` : `Tambah ${item.name}`}
                   className={`relative flex h-full min-h-24 w-full flex-col items-center gap-1.5 border-[1.5px] px-1.5 py-2.5 text-center font-mono text-[13px] leading-tight ${
                     done ? "border-accent bg-accent-soft" : "border-ink/20 bg-paper hover:border-ink"
                   }`}>

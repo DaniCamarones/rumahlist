@@ -12,8 +12,8 @@ import { ItemRow } from "@/components/item-row";
 import { ItemSuggestInput } from "@/components/item-suggest-input";
 import { Sheet } from "@/components/sheet";
 import { useToast } from "@/components/toast";
-import { findCatalogItem, type CatalogItem } from "@/lib/catalog";
 import { CATEGORIES, PRIORITIES, categoryOf } from "@/lib/constants";
+import { prefillFor, type Prefill } from "@/lib/prefill";
 import { formatRupiah } from "@/lib/format";
 import { estimatedTotal } from "@/lib/totals";
 import type { ShoppingItem } from "@/lib/types";
@@ -34,12 +34,15 @@ export default function ShoppingListPage() {
   const [formOpen, setFormOpen] = useState(false);
   const [catalogOpen, setCatalogOpen] = useState(false);
   const [editing, setEditing] = useState<ShoppingItem | undefined>();
+  const [prefill, setPrefill] = useState<Prefill | undefined>();
+  const [formKey, setFormKey] = useState(0);
   const [menuItem, setMenuItem] = useState<ShoppingItem | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => {
     if (window.location.hash === "#tambah") {
       // eslint-disable-next-line react-hooks/set-state-in-effect -- deep link from home
+      setPrefill(undefined);
       setFormOpen(true);
       history.replaceState(null, "", window.location.pathname);
     }
@@ -77,36 +80,40 @@ export default function ShoppingListPage() {
     app.setStatus(item.id, item.status === "purchased" ? "pending" : "purchased");
   }
 
-  /** Adds a catalog item (category, unit, quantity filled in) or a typed name. */
-  async function addItem(item: CatalogItem | { name: string }): Promise<boolean> {
-    const known = "category" in item ? item : findCatalogItem(item.name);
-    const name = known?.name ?? item.name.trim();
-    if (!name) return false;
-    if (inList.has(name.toLowerCase())) {
-      toast(`${name} sudah ada di daftar`);
-      return true;
+  /**
+   * Picking an item (suggestion, catalog tile or a new name) always opens the form so the
+   * quantity can be filled in. Already waiting on the list: open that item instead of doubling it.
+   */
+  function openFor(rawName: string) {
+    const p = prefillFor(app.state, rawName);
+    if (!p.name) return;
+    setQuick("");
+    setCatalogOpen(false);
+    const existing = items.find((i) => i.status === "pending" && i.name.toLowerCase() === p.name.toLowerCase());
+    if (existing) {
+      toast(`${existing.name} sudah ada di daftar, ubah di sini`);
+      openEdit(existing);
+      return;
     }
-    try {
-      app.add({ name, category: known?.category ?? category ?? "other", unit: known?.unit, quantity: known?.quantity });
-    } catch (err) {
-      toast((err as Error).message, "error");
-      return false;
-    }
-    toast(`${name} ditambahkan`);
-    return true;
+    if (!p.category && category) p.category = category;
+    setEditing(undefined);
+    setPrefill(p);
+    setFormKey((k) => k + 1);
+    setFormOpen(true);
   }
 
-  async function addQuick(item: CatalogItem | { name: string }) {
-    setQuick("");
-    if (!(await addItem(item))) setQuick(item.name);
+  function openEdit(item: ShoppingItem) {
+    setEditing(item);
+    setPrefill(undefined);
+    setFormKey((k) => k + 1);
+    setFormOpen(true);
   }
 
   function menuAction(action: "edit" | "duplicate" | "unavailable" | "cancel" | "restore" | "delete") {
     const item = menuItem!;
     if (action === "edit") {
       setMenuItem(null);
-      setEditing(item);
-      setFormOpen(true);
+      openEdit(item);
       return;
     }
     if (action === "delete" && !confirmDelete) {
@@ -130,6 +137,8 @@ export default function ShoppingListPage() {
   const pendingCount = items.filter((i) => i.status === "pending").length;
   const openForm = () => {
     setEditing(undefined);
+    setPrefill(prefillFor(app.state, ""));
+    setFormKey((k) => k + 1);
     setFormOpen(true);
   };
 
@@ -148,7 +157,7 @@ export default function ShoppingListPage() {
         <div className="min-w-0 flex-1">
           <ItemSuggestInput value={quick} onChange={setQuick} inList={inList}
             placeholder="Ketik barang, mis. a, bawang"
-            onPick={(item) => addQuick(item)} onSubmitText={(name) => addQuick({ name })} />
+            onPick={(item) => openFor(item.name)} onSubmitText={(name) => openFor(name)} />
         </div>
         <button className="btn btn-ghost shrink-0 px-3 font-mono text-[14px] uppercase" onClick={() => setCatalogOpen(true)}>
           Katalog
@@ -222,7 +231,7 @@ export default function ShoppingListPage() {
                 )}
                 <ul>
                   {g.items.map((i) => (
-                    <ItemRow key={i.id} item={i} onToggle={() => toggle(i)} onMenu={() => setMenuItem(i)} />
+                    <ItemRow key={i.id} item={i} onToggle={() => toggle(i)} onEdit={() => openEdit(i)} onMenu={() => setMenuItem(i)} />
                   ))}
                 </ul>
               </div>
@@ -233,7 +242,7 @@ export default function ShoppingListPage() {
               <span className="text-[18px] font-semibold tabular-nums">{formatRupiah(total)}</span>
             </div>
             <button onClick={openForm} className="mt-3 min-h-11 text-left font-mono text-[14px] font-medium text-accent underline underline-offset-4">
-              + Tambah dengan detail (harga, catatan)
+              + Tambah barang baru
             </button>
           </section>
 
@@ -247,7 +256,7 @@ export default function ShoppingListPage() {
               </div>
               <ul>
                 {done.map((i) => (
-                  <ItemRow key={i.id} item={i} onToggle={() => toggle(i)} onMenu={() => setMenuItem(i)} />
+                  <ItemRow key={i.id} item={i} onToggle={() => toggle(i)} onEdit={() => openEdit(i)} onMenu={() => setMenuItem(i)} />
                 ))}
               </ul>
             </section>
@@ -256,12 +265,11 @@ export default function ShoppingListPage() {
       )}
 
       <Sheet open={catalogOpen} title="Katalog barang" onClose={() => setCatalogOpen(false)}>
-        <CatalogPicker inList={inList} onAdd={addItem} initialCategory={category} />
+        <CatalogPicker inList={inList} onPick={(c) => openFor(c.name)} initialCategory={category} />
       </Sheet>
 
       <Sheet open={formOpen} title={editing ? "Ubah barang" : "Tambah barang"} onClose={() => setFormOpen(false)}>
-        <ItemForm key={editing?.id ?? "new"} item={editing} initial={{ category: category ?? undefined }}
-          onDone={() => setFormOpen(false)} />
+        <ItemForm key={formKey} item={editing} prefill={prefill} onDone={() => setFormOpen(false)} />
       </Sheet>
 
       <Sheet open={!!menuItem} title={menuItem?.name ?? ""} onClose={() => { setMenuItem(null); setConfirmDelete(false); }}>

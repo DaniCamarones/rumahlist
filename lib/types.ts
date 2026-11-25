@@ -6,7 +6,8 @@ export type ShoppingItem = {
   id: string;
   name: string;
   category: string;
-  quantity: number;
+  /** null until decided, usually while shopping. */
+  quantity: number | null;
   unit: string;
   estimated_price: number | null;
   actual_price: number | null;

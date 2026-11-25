@@ -36,6 +36,11 @@ export function formatQty(n: number): string {
   return new Intl.NumberFormat("id-ID", { maximumFractionDigits: 3 }).format(n);
 }
 
+/** "250 gram", or "? gram" when the quantity is still to be decided. */
+export function formatAmount(quantity: number | null, unit: string): string {
+  return `${quantity === null ? "?" : formatQty(quantity)} ${unit}`;
+}
+
 export function formatDate(iso: string, withTime = false): string {
   return new Intl.DateTimeFormat("id-ID", {
     day: "numeric",

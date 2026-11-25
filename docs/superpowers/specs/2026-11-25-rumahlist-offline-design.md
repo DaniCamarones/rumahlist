@@ -27,3 +27,11 @@ Sinkron antar HP, akun, keluarga/peran, aktivitas keluarga, notifikasi.
 ## Risiko
 - Data hanya di satu HP; dihapus jika data browser/aplikasi dihapus. Mitigasi: tombol Cadangkan/Pulihkan.
 - Data Android dan iPhone terpisah; pindah data lewat file cadangan.
+
+## Tambahan 2026-11-25: klik barang selalu buka form
+Disetujui pengguna: memilih barang (saran ketik, ubin Katalog, atau nama baru) **selalu membuka form barang**, tidak langsung masuk daftar.
+- Jumlah diisi sendiri. Barang yang belum pernah dibeli: jumlah kosong; satuan dan kategori ditandai dari tebakan katalog (jika ada) dan bisa diganti dengan diketuk.
+- Barang yang pernah dibeli: jumlah, satuan, kategori, dan harga terisi dari pembelian terakhir, dengan keterangan "Terakhir dibeli …".
+- Satuan dan kategori berupa tombol yang diketuk. Satuan baru: ons.
+- Mengetuk nama barang di daftar membuka form Ubah. "Pernah dibeli" dan "Beli lagi" tetap sekali ketuk.
+- Barang yang sudah ada di daftar: form Ubah untuk barang itu yang dibuka, supaya tidak dobel.

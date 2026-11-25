@@ -3,7 +3,7 @@ import { actualTotal, estimatedTotal } from "@/lib/totals";
 
 const item = (
   status: "pending" | "purchased" | "unavailable" | "cancelled",
-  quantity: number,
+  quantity: number | null,
   estimated_price: number | null,
   actual_price: number | null = null,
 ) => ({ status, quantity, estimated_price, actual_price });
@@ -16,6 +16,7 @@ describe("estimatedTotal", () => {
       item("cancelled", 3, 5000),
       item("unavailable", 1, 9000),
       item("pending", 1, null),
+      item("pending", null, 30000),
     ];
     expect(estimatedTotal(items)).toBe(80000);
   });
