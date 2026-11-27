@@ -1,0 +1,348 @@
+Item photos in this folder (160x160 WebP thumbnails) are sourced from
+Wikimedia Commons, Wikipedia, and Openverse under Creative Commons / public
+domain licenses for offline use in RumahList.
+
+Source attribution per file:
+- beras.webp (Beras): CC0 | https://commons.wikimedia.org/wiki/File:White_Rice_03.jpg
+- beras-merah.webp (Beras merah): CC / Wikimedia Commons | en.wikipedia.org/wiki/Red_rice
+- ketan-putih.webp (Ketan putih): CC / Wikimedia Commons | en.wikipedia.org/wiki/Glutinous_rice
+- ketan-hitam.webp (Ketan hitam): CC / Wikimedia Commons | en.wikipedia.org/wiki/Black_rice
+- tepung-terigu.webp (Tepung terigu): CC BY-SA 2.0 | https://commons.wikimedia.org/wiki/File:All-Purpose_Flour_(4107895947).jpg
+- tepung-beras.webp (Tepung beras): CC / Wikimedia Commons | en.wikipedia.org/wiki/Rice_flour
+- tepung-tapioka.webp (Tepung tapioka): CC / Wikimedia Commons | en.wikipedia.org/wiki/Tapioca
+- tepung-maizena.webp (Tepung maizena): CC / Wikimedia Commons | en.wikipedia.org/wiki/Corn_starch
+- tepung-roti.webp (Tepung roti): CC / Wikimedia Commons | en.wikipedia.org/wiki/Breadcrumbs
+- mie-instan.webp (Mie instan): CC / Wikimedia Commons | en.wikipedia.org/wiki/Instant_noodles
+- mie-telur.webp (Mie telur): CC0 | https://commons.wikimedia.org/wiki/File:Noodles_with_egg_for_Sahur.jpg
+- bihun.webp (Bihun): CC / Wikimedia Commons | en.wikipedia.org/wiki/Rice_vermicelli
+- soun.webp (Soun): CC / Wikimedia Commons | en.wikipedia.org/wiki/Glass_noodles
+- kwetiau.webp (Kwetiau): CC / Wikimedia Commons | en.wikipedia.org/wiki/Shahe_fen
+- pasta.webp (Pasta): CC / Wikimedia Commons | en.wikipedia.org/wiki/Pasta
+- roti-tawar.webp (Roti tawar): CC / Wikimedia Commons | en.wikipedia.org/wiki/Sliced_bread
+- roti-gandum.webp (Roti gandum): CC / Wikimedia Commons | en.wikipedia.org/wiki/Whole_wheat_bread
+- oatmeal.webp (Oatmeal): CC / Wikimedia Commons | en.wikipedia.org/wiki/Rolled_oats
+- sereal.webp (Sereal): CC / Wikimedia Commons | en.wikipedia.org/wiki/Breakfast_cereal
+- kentang.webp (Kentang): CC / Wikimedia Commons | en.wikipedia.org/wiki/Potato
+- ubi.webp (Ubi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Sweet_potato
+- singkong.webp (Singkong): CC0 | https://commons.wikimedia.org/wiki/File:Balanghoy_(Manihot_esculenta)_tubers.jpg
+- jagung-pipil.webp (Jagung pipil): CC / Wikimedia Commons | en.wikipedia.org/wiki/Corn_kernel
+- kacang-hijau.webp (Kacang hijau): CC / Wikimedia Commons | en.wikipedia.org/wiki/Mung_bean
+- kacang-merah.webp (Kacang merah): CC / Wikimedia Commons | en.wikipedia.org/wiki/Kidney_bean
+- kacang-tanah.webp (Kacang tanah): CC BY | https://www.flickr.com/photos/35801495@N06/8511419352
+- kacang-kedelai.webp (Kacang kedelai): CC0 | https://commons.wikimedia.org/wiki/File:Soybeans_and_dried_chillies.jpg
+- bayam.webp (Bayam): CC BY 3.0 | https://commons.wikimedia.org/wiki/File:Spinach_leaves.jpg
+- kangkung.webp (Kangkung): CC0 | https://commons.wikimedia.org/wiki/File:Kangkung_Belacan_-_Roti_King_2026-02-21.jpg
+- sawi-hijau.webp (Sawi hijau): CC / Wikimedia Commons | id.wikipedia.org/wiki/Sawi_hijau
+- sawi-putih.webp (Sawi putih): CC / Wikimedia Commons | en.wikipedia.org/wiki/Napa_cabbage
+- pakcoy.webp (Pakcoy): CC / Wikimedia Commons | en.wikipedia.org/wiki/Bok_choy
+- selada.webp (Selada): CC / Wikimedia Commons | en.wikipedia.org/wiki/Lettuce
+- kol.webp (Kol): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cabbage
+- brokoli.webp (Brokoli): CC / Wikimedia Commons | en.wikipedia.org/wiki/Broccoli
+- kembang-kol.webp (Kembang kol): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cauliflower
+- wortel.webp (Wortel): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:(%D8%AE%D8%B6%D8%A7%D8%B1_(%D8%B3%D9%81%D9%86%D8%A7%D8%B1%D9%8A%D8%A9_%2B%D9%84%D9%81%D8%AA).JPG
+- tomat.webp (Tomat): CC / Wikimedia Commons | en.wikipedia.org/wiki/Tomato
+- timun.webp (Timun): CC CC0 | https://www.rawpixel.com/image/3304073/free-photo-image-animal-cc0-creative-commons
+- terong.webp (Terong): CC CC0 | https://www.rawpixel.com/image/8731986/photo-image-plant-public-domain-purple
+- labu-siam.webp (Labu siam): CC / Wikimedia Commons | en.wikipedia.org/wiki/Chayote
+- buncis.webp (Buncis): CC / Wikimedia Commons | en.wikipedia.org/wiki/Green_bean
+- kacang-panjang.webp (Kacang panjang): CC BY 3.0 | https://commons.wikimedia.org/wiki/File:Seikat_Sayur_Kacang_Panjang.jpg
+- tauge.webp (Tauge): CC / Wikimedia Commons | en.wikipedia.org/wiki/Mung_bean_sprout
+- jagung-manis.webp (Jagung manis): CC / Wikimedia Commons | en.wikipedia.org/wiki/Sweet_corn
+- jamur-kancing.webp (Jamur kancing): CC / Wikimedia Commons | en.wikipedia.org/wiki/Agaricus_bisporus
+- jamur-tiram.webp (Jamur tiram): CC / Wikimedia Commons | en.wikipedia.org/wiki/Pleurotus_ostreatus
+- jamur-enoki.webp (Jamur enoki): CC / Wikimedia Commons | en.wikipedia.org/wiki/Flammulina_filiformis
+- daun-singkong.webp (Daun singkong): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Manihot_esculenta_-_leaves_(Euphorbiaceae)_01.jpg
+- daun-pepaya.webp (Daun pepaya): CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Carica_papaya_leaf_14072012.JPG
+- pare.webp (Pare): CC0 | https://commons.wikimedia.org/wiki/File:Indian_bitter_melons_-_Heart_of_the_City_Farmers%27_Market_-_San_Francisco.jpg
+- oyong.webp (Oyong): CC / Wikimedia Commons | en.wikipedia.org/wiki/Luffa_acutangula
+- paprika.webp (Paprika): CC / Wikimedia Commons | en.wikipedia.org/wiki/Bell_pepper
+- kailan.webp (Kailan): CC / Wikimedia Commons | en.wikipedia.org/wiki/Gai_lan
+- daun-bawang.webp (Daun bawang): CC / Wikimedia Commons | en.wikipedia.org/wiki/Scallion
+- seledri.webp (Seledri): CC / Wikimedia Commons | en.wikipedia.org/wiki/Celery
+- kemangi.webp (Kemangi): CC / Wikimedia Commons | id.wikipedia.org/wiki/Kemangi
+- selada-air.webp (Selada air): CC / Wikimedia Commons | en.wikipedia.org/wiki/Watercress
+- rebung.webp (Rebung): CC / Wikimedia Commons | en.wikipedia.org/wiki/Bamboo_shoot
+- nangka-muda.webp (Nangka muda): CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Artocarpus_heterophyllus_fruits_at_tree.jpg
+- melinjo.webp (Melinjo): CC / Wikimedia Commons | id.wikipedia.org/wiki/Melinjo
+- petai.webp (Petai): CC / Wikimedia Commons | id.wikipedia.org/wiki/Petai
+- jengkol.webp (Jengkol): CC / Wikimedia Commons | id.wikipedia.org/wiki/Jengkol
+- sayur-asem.webp (Sayur asem): CC / Wikimedia Commons | id.wikipedia.org/wiki/Sayur_asam
+- sayur-sop.webp (Sayur sop): CC / Wikimedia Commons | en.wikipedia.org/wiki/Vegetable_soup
+- cabai-merah-besar.webp (Cabai merah besar): CC BY | https://www.flickr.com/photos/25962164@N04/4783962793
+- cabai-keriting.webp (Cabai keriting): Public domain | https://commons.wikimedia.org/wiki/File:VitorJubini_MercadoDaVilaRubim_Vitoria_ES_(39182859020)_(square_crop).jpg
+- cabai-rawit.webp (Cabai rawit): CC / Wikimedia Commons | en.wikipedia.org/wiki/Bird%27s_eye_chili
+- cabai-hijau.webp (Cabai hijau): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Serrano_Peppers_from_San_Francisco_Farmers_Market.jpg
+- pisang.webp (Pisang): CC / Wikimedia Commons | en.wikipedia.org/wiki/Banana
+- apel.webp (Apel): CC / Wikimedia Commons | en.wikipedia.org/wiki/Apple
+- jeruk.webp (Jeruk): CC / Wikimedia Commons | en.wikipedia.org/wiki/Mandarin_orange
+- jeruk-nipis.webp (Jeruk nipis): CC / Wikimedia Commons | en.wikipedia.org/wiki/Key_lime
+- lemon.webp (Lemon): CC BY | https://www.flickr.com/photos/31095405@N06/2975957430
+- mangga.webp (Mangga): CC / Wikimedia Commons | en.wikipedia.org/wiki/Mango
+- pepaya.webp (Pepaya): GFDL 1.2 | https://commons.wikimedia.org/wiki/File:Papaya_cross_section_BNC.jpg
+- semangka.webp (Semangka): CC BY-SA | https://www.flickr.com/photos/27526538@N07/5427691534
+- melon.webp (Melon): CC / Wikimedia Commons | en.wikipedia.org/wiki/Honeydew_%28melon%29
+- nanas.webp (Nanas): CC / Wikimedia Commons | en.wikipedia.org/wiki/Pineapple
+- anggur.webp (Anggur): CC / Wikimedia Commons | en.wikipedia.org/wiki/Grape
+- stroberi.webp (Stroberi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Strawberry
+- alpukat.webp (Alpukat): CC CC0 | https://www.rawpixel.com/image/5914514/image-public-domain-plant-green
+- salak.webp (Salak): CC / Wikimedia Commons | en.wikipedia.org/wiki/Salak
+- rambutan.webp (Rambutan): CC / Wikimedia Commons | en.wikipedia.org/wiki/Rambutan
+- duku.webp (Duku): CC / Wikimedia Commons | id.wikipedia.org/wiki/Duku
+- manggis.webp (Manggis): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Mangosteens_-_whole_and_opened.jpg
+- durian.webp (Durian): CC / Wikimedia Commons | en.wikipedia.org/wiki/Durian
+- jambu-biji.webp (Jambu biji): CC / Wikimedia Commons | en.wikipedia.org/wiki/Guava
+- jambu-air.webp (Jambu air): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Syzygium_fruit.jpg
+- belimbing.webp (Belimbing): CC / Wikimedia Commons | en.wikipedia.org/wiki/Carambola
+- pir.webp (Pir): CC / Wikimedia Commons | en.wikipedia.org/wiki/Pear
+- kelengkeng.webp (Kelengkeng): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Dimocarpus_longan_(2).jpg
+- buah-naga.webp (Buah naga): CC / Wikimedia Commons | en.wikipedia.org/wiki/Dragon_fruit
+- kiwi.webp (Kiwi): CC BY | https://www.flickr.com/photos/43264265@N00/5317566258
+- kurma.webp (Kurma): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Medjool_dates_as_luxury_item.jpg
+- sirsak.webp (Sirsak): CC / Wikimedia Commons | en.wikipedia.org/wiki/Soursop
+- markisa.webp (Markisa): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Passionfruit_(whole_and_half).jpg
+- kelapa-muda.webp (Kelapa muda): CC0 | https://commons.wikimedia.org/wiki/File:Coconut_green%F0%9F%A5%A5.jpg
+- ayam-potong.webp (Ayam potong): CC / Wikimedia Commons | en.wikipedia.org/wiki/Chicken_as_food
+- ayam-fillet.webp (Ayam fillet): CC0 | https://commons.wikimedia.org/wiki/File:Chicken_breast,_roast_broccoli,_and_celery_-_Massachusetts.jpg
+- paha-ayam.webp (Paha ayam): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Chicken_with_potatoes,_onion,_garlic,_and_rosemary_before_roasting.jpg
+- sayap-ayam.webp (Sayap ayam): CC BY-NC-ND | https://www.flickr.com/photos/46228898@N08/4400111654
+- ati-ampela.webp (Ati ampela): CC / Wikimedia Commons | en.wikipedia.org/wiki/Gizzard
+- ceker-ayam.webp (Ceker ayam): CC / Wikimedia Commons | en.wikipedia.org/wiki/Chicken_feet
+- daging-sapi.webp (Daging sapi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Beef
+- daging-giling.webp (Daging giling): CC / Wikimedia Commons | en.wikipedia.org/wiki/Ground_beef
+- iga-sapi.webp (Iga sapi): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:-2020-08-02_Rib_of_Beef_roasting_joint,_Trimingham,_Norfolk.JPG
+- tetelan-sapi.webp (Tetelan sapi): CC BY 2.0 | https://commons.wikimedia.org/wiki/File:20241123_Rindsuppe_004_(54250401408).jpg
+- daging-kambing.webp (Daging kambing): CC / Wikimedia Commons | en.wikipedia.org/wiki/Goat_meat
+- bebek.webp (Bebek): CC / Wikimedia Commons | en.wikipedia.org/wiki/Duck_as_food
+- sosis.webp (Sosis): CC BY-NC-ND | https://www.flickr.com/photos/83052216@N00/3401001870
+- nugget-ayam.webp (Nugget ayam): CC / Wikimedia Commons | en.wikipedia.org/wiki/Chicken_nugget
+- bakso-sapi.webp (Bakso sapi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Bakso
+- kornet.webp (Kornet): CC / Wikimedia Commons | en.wikipedia.org/wiki/Corned_beef
+- telur-ayam.webp (Telur ayam): CC BY-ND | https://www.flickr.com/photos/22798667@N00/7271305936
+- telur-bebek.webp (Telur bebek): CC / Wikimedia Commons | en.wikipedia.org/wiki/Salted_duck_egg
+- telur-puyuh.webp (Telur puyuh): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:(Quail_eggs)_in_black_and_white.JPG
+- tahu.webp (Tahu): CC / Wikimedia Commons | en.wikipedia.org/wiki/Tofu
+- tempe.webp (Tempe): CC / Wikimedia Commons | en.wikipedia.org/wiki/Tempeh
+- tahu-putih.webp (Tahu putih): CC BY-NC | https://www.flickr.com/photos/14183017@N00/3349860829
+- oncom.webp (Oncom): CC / Wikimedia Commons | en.wikipedia.org/wiki/Oncom
+- ikan-kembung.webp (Ikan kembung): CC / Wikimedia Commons | en.wikipedia.org/wiki/Indian_mackerel
+- ikan-tongkol.webp (Ikan tongkol): CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Auxis_thazard_flank.jpg
+- ikan-lele.webp (Ikan lele): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:African_Cat_fish.jpg
+- ikan-nila.webp (Ikan nila): CC / Wikimedia Commons | en.wikipedia.org/wiki/Nile_tilapia
+- ikan-bandeng.webp (Ikan bandeng): CC / Wikimedia Commons | en.wikipedia.org/wiki/Milkfish
+- ikan-gurame.webp (Ikan gurame): CC / Wikimedia Commons | en.wikipedia.org/wiki/Giant_gourami
+- ikan-kakap.webp (Ikan kakap): CC / Wikimedia Commons | en.wikipedia.org/wiki/Red_snapper
+- ikan-salmon.webp (Ikan salmon): CC / Wikimedia Commons | en.wikipedia.org/wiki/Salmon_as_food
+- ikan-tuna.webp (Ikan tuna): CC0 | https://commons.wikimedia.org/wiki/File:Tuna_steak_and_peas_-_Massachusetts.jpg
+- ikan-teri.webp (Ikan teri): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Dried_Anchovies_in_Busan_Korea_Market.jpg
+- ikan-asin.webp (Ikan asin): Public domain | https://commons.wikimedia.org/wiki/File:Salted_and_dried_Arapaima_meat_on_sale_in_Manaus.jpg
+- ikan-patin.webp (Ikan patin): CC / Wikimedia Commons | en.wikipedia.org/wiki/Iridescent_shark
+- ikan-mujair.webp (Ikan mujair): CC / Wikimedia Commons | en.wikipedia.org/wiki/Mozambique_tilapia
+- ikan-kerapu.webp (Ikan kerapu): CC / Wikimedia Commons | en.wikipedia.org/wiki/Grouper
+- udang.webp (Udang): CC BY-NC-ND | https://www.flickr.com/photos/38669159@N06/14108814858
+- udang-rebon.webp (Udang rebon): CC / Wikimedia Commons | en.wikipedia.org/wiki/Dried_shrimp
+- cumi-cumi.webp (Cumi-cumi): CC BY-NC-ND | https://www.flickr.com/photos/8771151@N03/1041321646
+- kepiting.webp (Kepiting): CC BY-NC-SA | https://www.flickr.com/photos/8136604@N05/15232430632
+- kerang-hijau.webp (Kerang hijau): CC / Wikimedia Commons | en.wikipedia.org/wiki/Perna_viridis
+- kerang-dara.webp (Kerang dara): CC / Wikimedia Commons | en.wikipedia.org/wiki/Tegillarca_granosa
+- ikan-sarden.webp (Ikan sarden): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:16-07-2017_Can_of_Sardines,_Alva,_Portugal.JPG
+- bakso-ikan.webp (Bakso ikan): CC / Wikimedia Commons | en.wikipedia.org/wiki/Fish_ball
+- otak-otak.webp (Otak-otak): CC / Wikimedia Commons | en.wikipedia.org/wiki/Otak-otak
+- minyak-goreng.webp (Minyak goreng): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cooking_oil
+- minyak-kelapa.webp (Minyak kelapa): CC / Wikimedia Commons | en.wikipedia.org/wiki/Coconut_oil
+- minyak-zaitun.webp (Minyak zaitun): CC / Wikimedia Commons | en.wikipedia.org/wiki/Olive_oil
+- mentega.webp (Mentega): CC / Wikimedia Commons | en.wikipedia.org/wiki/Butter
+- margarin.webp (Margarin): CC / Wikimedia Commons | en.wikipedia.org/wiki/Margarine
+- santan-kara.webp (Santan kara): CC / Wikimedia Commons | en.wikipedia.org/wiki/Coconut_milk
+- kelapa-parut.webp (Kelapa parut): CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Grated_coconut.jpg
+- gula-pasir.webp (Gula pasir): CC0 | https://commons.wikimedia.org/wiki/File:A_Bowl_of_Sugar_2.jpg
+- gula-merah.webp (Gula merah): CC / Wikimedia Commons | en.wikipedia.org/wiki/Palm_sugar
+- gula-aren.webp (Gula aren): CC / Wikimedia Commons | id.wikipedia.org/wiki/Gula_aren
+- garam.webp (Garam): CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Salt_shaker_on_white_background.jpg
+- kecap-manis.webp (Kecap manis): CC / Wikimedia Commons | en.wikipedia.org/wiki/Sweet_soy_sauce
+- kecap-asin.webp (Kecap asin): CC / Wikimedia Commons | en.wikipedia.org/wiki/Soy_sauce
+- saus-tomat.webp (Saus tomat): CC / Wikimedia Commons | en.wikipedia.org/wiki/Ketchup
+- saus-sambal.webp (Saus sambal): CC / Wikimedia Commons | en.wikipedia.org/wiki/Chili_sauce_and_paste
+- saus-tiram.webp (Saus tiram): CC / Wikimedia Commons | en.wikipedia.org/wiki/Oyster_sauce
+- saus-teriyaki.webp (Saus teriyaki): CC / Wikimedia Commons | en.wikipedia.org/wiki/Teriyaki
+- mayones.webp (Mayones): CC / Wikimedia Commons | en.wikipedia.org/wiki/Mayonnaise
+- cuka.webp (Cuka): CC / Wikimedia Commons | en.wikipedia.org/wiki/Vinegar
+- susu-kental-manis.webp (Susu kental manis): CC / Wikimedia Commons | en.wikipedia.org/wiki/Condensed_milk
+- keju.webp (Keju): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cheddar
+- ragi.webp (Ragi): CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Spoon_with_active_dry_yeast_for_baking_bread.jpg
+- baking-powder.webp (Baking powder): CC / Wikimedia Commons | en.wikipedia.org/wiki/Baking_powder
+- pengembang-kue.webp (Pengembang kue): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:HK_TKO_%E5%B0%87%E8%BB%8D%E6%BE%B3_Tseung_Kwan_O_%E5%B0%9A%E5%BE%B7%E5%BB%A3%E5%A0%B4_Sheung_Tak_Estate_Shopping_Centre_SPOT_shop_%E7%99%BE%E4%BD%B3%E8%B6%85%E5%B8%82_ParknShop_Supermarket_baking_soda_powder_June_2022_Px3.jpg
+- cokelat-bubuk.webp (Cokelat bubuk): CC BY-SA 2.0 | https://commons.wikimedia.org/wiki/File:Cocoa_powder.jpg
+- agar-agar.webp (Agar-agar): CC / Wikimedia Commons | en.wikipedia.org/wiki/Agar
+- gelatin.webp (Gelatin): CC / Wikimedia Commons | en.wikipedia.org/wiki/Gelatin
+- vanili.webp (Vanili): CC / Wikimedia Commons | en.wikipedia.org/wiki/Vanilla
+- madu.webp (Madu): CC / Wikimedia Commons | en.wikipedia.org/wiki/Honey
+- selai.webp (Selai): CC / Wikimedia Commons | en.wikipedia.org/wiki/Fruit_preserves
+- meses.webp (Meses): CC / Wikimedia Commons | en.wikipedia.org/wiki/Hagelslag
+- kerupuk-mentah.webp (Kerupuk mentah): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:B%C3%A1nh_ph%E1%BB%93ng_t%C3%B4m_cooked_and_raw.jpg
+- bawang-goreng.webp (Bawang goreng): CC / Wikimedia Commons | en.wikipedia.org/wiki/Bawang_goreng
+- tepung-bumbu.webp (Tepung bumbu): CC0 | https://commons.wikimedia.org/wiki/File:HK_food_%E9%BA%B5%E7%B2%89_Wheat_flour_powder_%E5%8A%A0%E5%85%A5%E9%9B%9E%E8%9B%8B_with_egg_October_2025_N13P_01.jpg
+- bawang-merah.webp (Bawang merah): CC / Wikimedia Commons | en.wikipedia.org/wiki/Shallot
+- bawang-putih.webp (Bawang putih): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Garlic_bulbs_and_cloves.jpg
+- bawang-bombay.webp (Bawang bombay): CC / Wikimedia Commons | en.wikipedia.org/wiki/Yellow_onion
+- jahe.webp (Jahe): CC BY 3.0 | https://commons.wikimedia.org/wiki/File:Ginger_Root_(179871501).jpeg
+- kunyit.webp (Kunyit): CC BY | https://www.flickr.com/photos/50310535@N03/6865121460
+- lengkuas.webp (Lengkuas): CC0 | https://commons.wikimedia.org/wiki/File:Alpinia_galanga_dried.jpg
+- kencur.webp (Kencur): CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Cekur_(Kaempferia_galanga).jpg
+- serai.webp (Serai): CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Cymbopogon_flexuosus_(East_Indian_lemongrass),_harvested_stalks_(SaatPilot).jpg
+- daun-salam.webp (Daun salam): CC / Wikimedia Commons | en.wikipedia.org/wiki/Bay_leaf
+- daun-jeruk.webp (Daun jeruk): CC / Wikimedia Commons | en.wikipedia.org/wiki/Kaffir_lime
+- daun-pandan.webp (Daun pandan): CC / Wikimedia Commons | en.wikipedia.org/wiki/Pandanus_amaryllifolius
+- kemiri.webp (Kemiri): CC0 | https://commons.wikimedia.org/wiki/File:Candlenut_fallen_fruit.jpg
+- ketumbar.webp (Ketumbar): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Coriander_Seeds.jpg
+- merica-bubuk.webp (Merica bubuk): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:202408_%E9%99%84%E8%91%97%E8%AA%BF%E5%91%B3%E7%BD%90%E9%A0%82%E9%83%A8%E7%9A%84%E7%99%BD%E8%83%A1%E6%A4%92%E7%B2%89.jpg
+- merica-butir.webp (Merica butir): CC0 | https://commons.wikimedia.org/wiki/File:White_Peppercorns.jpg
+- jintan.webp (Jintan): CC0 | https://commons.wikimedia.org/wiki/File:Whole_Cumin_Seeds.jpg
+- pala.webp (Pala): CC / Wikimedia Commons | en.wikipedia.org/wiki/Nutmeg
+- cengkeh.webp (Cengkeh): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Gewuerze_004_2024_08_10.jpg
+- kayu-manis.webp (Kayu manis): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cinnamon
+- bunga-lawang.webp (Bunga lawang): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Dried_Star_Anise_Fruit_Seeds.jpg
+- kapulaga.webp (Kapulaga): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cardamom
+- asam-jawa.webp (Asam jawa): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Tamarind_Pods_at_Bakin_Dogo_Market,_Kaduna_North.jpg
+- terasi.webp (Terasi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Shrimp_paste
+- petis.webp (Petis): CC / Wikimedia Commons | id.wikipedia.org/wiki/Petis
+- penyedap-rasa.webp (Penyedap rasa): CC / Wikimedia Commons | en.wikipedia.org/wiki/Bouillon_cube
+- kaldu-ayam-bubuk.webp (Kaldu ayam bubuk): CC BY-NC | https://www.flickr.com/photos/97249369@N00/5074635104
+- kaldu-sapi-bubuk.webp (Kaldu sapi bubuk): CC BY-NC-ND | https://www.flickr.com/photos/44124363356@N01/8562704600
+- micin.webp (Micin): CC / Wikimedia Commons | en.wikipedia.org/wiki/Monosodium_glutamate
+- bumbu-nasi-goreng.webp (Bumbu nasi goreng): CC / Wikimedia Commons | en.wikipedia.org/wiki/Nasi_goreng
+- bumbu-rendang.webp (Bumbu rendang): CC / Wikimedia Commons | en.wikipedia.org/wiki/Rendang
+- bumbu-soto.webp (Bumbu soto): CC / Wikimedia Commons | en.wikipedia.org/wiki/Soto_%28food%29
+- bumbu-opor.webp (Bumbu opor): CC / Wikimedia Commons | en.wikipedia.org/wiki/Opor_ayam
+- bumbu-kari.webp (Bumbu kari): CC / Wikimedia Commons | en.wikipedia.org/wiki/Curry_powder
+- bumbu-rawon.webp (Bumbu rawon): CC / Wikimedia Commons | en.wikipedia.org/wiki/Rawon
+- bumbu-gulai.webp (Bumbu gulai): CC / Wikimedia Commons | en.wikipedia.org/wiki/Gulai
+- sambal-terasi.webp (Sambal terasi): CC / Wikimedia Commons | id.wikipedia.org/wiki/Sambal
+- cabai-bubuk.webp (Cabai bubuk): CC / Wikimedia Commons | en.wikipedia.org/wiki/Chili_powder
+- oregano.webp (Oregano): Public domain | https://commons.wikimedia.org/wiki/File:Oregano_dried.JPG
+- air-mineral.webp (Air mineral): CC / Wikimedia Commons | en.wikipedia.org/wiki/Bottled_water
+- air-mineral-kardus.webp (Air mineral kardus): CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Sinulog_Bottled_Water.jpg
+- teh-celup.webp (Teh celup): CC / Wikimedia Commons | en.wikipedia.org/wiki/Tea_bag
+- teh-tubruk.webp (Teh tubruk): CC / Wikimedia Commons | en.wikipedia.org/wiki/Black_tea
+- kopi-bubuk.webp (Kopi bubuk): CC / Wikimedia Commons | en.wikipedia.org/wiki/Coffee
+- kopi-sachet.webp (Kopi sachet): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:10_O_clock.jpg
+- kopi-instan.webp (Kopi instan): CC / Wikimedia Commons | en.wikipedia.org/wiki/Instant_coffee
+- susu-uht.webp (Susu UHT): CC / Wikimedia Commons | en.wikipedia.org/wiki/Milk
+- susu-bubuk.webp (Susu bubuk): CC / Wikimedia Commons | en.wikipedia.org/wiki/Powdered_milk
+- susu-kedelai.webp (Susu kedelai): CC / Wikimedia Commons | en.wikipedia.org/wiki/Soy_milk
+- yogurt.webp (Yogurt): CC / Wikimedia Commons | en.wikipedia.org/wiki/Yogurt
+- jus-buah.webp (Jus buah): CC / Wikimedia Commons | en.wikipedia.org/wiki/Orange_juice
+- sirup.webp (Sirup): CC / Wikimedia Commons | en.wikipedia.org/wiki/Syrup
+- minuman-soda.webp (Minuman soda): CC / Wikimedia Commons | en.wikipedia.org/wiki/Soft_drink
+- minuman-isotonik.webp (Minuman isotonik): CC / Wikimedia Commons | en.wikipedia.org/wiki/Sports_drink
+- teh-kotak.webp (Teh kotak): CC / Wikimedia Commons | en.wikipedia.org/wiki/Iced_tea
+- cokelat-minuman.webp (Cokelat minuman): CC / Wikimedia Commons | en.wikipedia.org/wiki/Hot_chocolate
+- susu-anak.webp (Susu anak): Public domain | https://commons.wikimedia.org/wiki/File:1969_-_Freemans_Milk_Carton_Ad_-_Dorney_Park_-_Allentown_PA.jpg
+- krimer.webp (Krimer): CC / Wikimedia Commons | en.wikipedia.org/wiki/Non-dairy_creamer
+- es-batu.webp (Es batu): CC / Wikimedia Commons | en.wikipedia.org/wiki/Ice_cube
+- air-mineral-galon.webp (Air mineral galon): CC / Wikimedia Commons | en.wikipedia.org/wiki/Water_dispenser
+- biskuit.webp (Biskuit): CC / Wikimedia Commons | en.wikipedia.org/wiki/Biscuit
+- wafer.webp (Wafer): CC / Wikimedia Commons | en.wikipedia.org/wiki/Wafer
+- keripik-kentang.webp (Keripik kentang): CC / Wikimedia Commons | en.wikipedia.org/wiki/Potato_chips
+- keripik-singkong.webp (Keripik singkong): CC / Wikimedia Commons | en.wikipedia.org/wiki/Tapioca_chips
+- kerupuk.webp (Kerupuk): CC / Wikimedia Commons | en.wikipedia.org/wiki/Krupuk
+- kacang-atom.webp (Kacang atom): CC / Wikimedia Commons | en.wikipedia.org/wiki/Japanese-style_peanuts
+- cokelat-batang.webp (Cokelat batang): CC / Wikimedia Commons | en.wikipedia.org/wiki/Chocolate_bar
+- permen.webp (Permen): CC / Wikimedia Commons | en.wikipedia.org/wiki/Candy
+- roti-manis.webp (Roti manis): CC / Wikimedia Commons | en.wikipedia.org/wiki/Sweet_roll
+- kue-kering.webp (Kue kering): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cookie
+- es-krim.webp (Es krim): CC / Wikimedia Commons | en.wikipedia.org/wiki/Ice_cream
+- puding.webp (Puding): CC / Wikimedia Commons | en.wikipedia.org/wiki/Pudding
+- agar-agar-jadi.webp (Agar-agar jadi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Gelatine_dessert
+- popcorn.webp (Popcorn): CC BY-ND | https://www.flickr.com/photos/96232705@N05/27967099534
+- rempeyek.webp (Rempeyek): CC / Wikimedia Commons | en.wikipedia.org/wiki/Rempeyek
+- kacang-mete.webp (Kacang mete): CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:CashewSnack.jpg
+- sereal-batang.webp (Sereal batang): CC0 | https://commons.wikimedia.org/wiki/File:Granola_bars.jpg
+- marshmallow.webp (Marshmallow): CC / Wikimedia Commons | en.wikipedia.org/wiki/Marshmallow
+- kue-basah.webp (Kue basah): CC / Wikimedia Commons | en.wikipedia.org/wiki/Kue
+- lapis-legit.webp (Lapis legit): CC / Wikimedia Commons | en.wikipedia.org/wiki/Lapis_legit
+- sabun-mandi.webp (Sabun mandi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Soap
+- sabun-cair.webp (Sabun cair): CC BY-NC | https://www.flickr.com/photos/18378305@N00/21583286568
+- sampo.webp (Sampo): CC0 | https://commons.wikimedia.org/wiki/File:Dove_shampoo_bottle_in_black_background.jpg
+- kondisioner.webp (Kondisioner): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Hair_shampoos,_conditioners_and_other_hair_care_products_in_liter_bottles_for_use_in_hair_salon.jpg
+- pasta-gigi.webp (Pasta gigi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Toothpaste
+- sikat-gigi.webp (Sikat gigi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Toothbrush
+- obat-kumur.webp (Obat kumur): CC / Wikimedia Commons | en.wikipedia.org/wiki/Mouthwash
+- benang-gigi.webp (Benang gigi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Dental_floss
+- deodoran.webp (Deodoran): CC / Wikimedia Commons | en.wikipedia.org/wiki/Deodorant
+- sabun-cuci-muka.webp (Sabun cuci muka): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Crema_Calmante_para_la_piel_,_Nature%27s_Soothing_Skin_Cream.jpg
+- pelembap.webp (Pelembap): CC / Wikimedia Commons | en.wikipedia.org/wiki/Moisturizer
+- tabir-surya.webp (Tabir surya): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Sunscreen_Sonnencreme_in_Z%C3%BCrich_Switzerland.jpg
+- losion.webp (Losion): CC / Wikimedia Commons | en.wikipedia.org/wiki/Lotion
+- cotton-bud.webp (Cotton bud): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cotton_swab
+- kapas.webp (Kapas): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cotton_pad
+- pisau-cukur.webp (Pisau cukur): CC / Wikimedia Commons | en.wikipedia.org/wiki/Safety_razor
+- tisu-toilet.webp (Tisu toilet): CC / Wikimedia Commons | en.wikipedia.org/wiki/Toilet_paper
+- tisu-wajah.webp (Tisu wajah): CC / Wikimedia Commons | en.wikipedia.org/wiki/Facial_tissue
+- tisu-basah.webp (Tisu basah): CC / Wikimedia Commons | en.wikipedia.org/wiki/Wet_wipe
+- pembalut.webp (Pembalut): CC / Wikimedia Commons | en.wikipedia.org/wiki/Menstrual_pad
+- popok-bayi.webp (Popok bayi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Diaper
+- minyak-telon.webp (Minyak telon): CC BY-NC-SA | https://www.flickr.com/photos/24783887@N00/352265882
+- bedak-bayi.webp (Bedak bayi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Baby_powder
+- sabun-bayi.webp (Sabun bayi): CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Baby_Bath_Products_on_Kroger_Shelves.JPG
+- sampo-bayi.webp (Sampo bayi): CC BY-NC | https://www.flickr.com/photos/23669836@N08/6012351087
+- hand-sanitizer.webp (Hand sanitizer): CC / Wikimedia Commons | en.wikipedia.org/wiki/Hand_sanitizer
+- sabun-cuci-tangan.webp (Sabun cuci tangan): CC0 | https://commons.wikimedia.org/wiki/File:Corcraft_Soap_Dispenser.jpg
+- plester-luka.webp (Plester luka): CC / Wikimedia Commons | en.wikipedia.org/wiki/Adhesive_bandage
+- minyak-kayu-putih.webp (Minyak kayu putih): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cajeput_oil
+- obat-nyamuk-oles.webp (Obat nyamuk oles): Public domain | https://commons.wikimedia.org/wiki/File:Insect_repellent,_NPSPhoto,_R_Cammauf_(9102105822).jpg
+- sabun-cuci-piring.webp (Sabun cuci piring): CC / Wikimedia Commons | en.wikipedia.org/wiki/Dishwashing_liquid
+- spons-cuci-piring.webp (Spons cuci piring): CC / Wikimedia Commons | en.wikipedia.org/wiki/Sponge_%28tool%29
+- sabut-kawat.webp (Sabut kawat): CC / Wikimedia Commons | en.wikipedia.org/wiki/Steel_wool
+- deterjen-bubuk.webp (Deterjen bubuk): CC / Wikimedia Commons | en.wikipedia.org/wiki/Laundry_detergent
+- deterjen-cair.webp (Deterjen cair): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:HK_SKD_TKO_Po_Yap_Road_%E5%B0%87%E8%BB%8D%E6%BE%B3%E5%BB%A3%E5%A0%B4_Tseung_Kwan_O_Plaza_K-mart_fresh_food_indoor_market_shop_Kai_Bo_Food_Supermarket_Wayway_Laundry_Liquid_plastic_bottle_July_2021_SS2_01.jpg
+- pelembut-pakaian.webp (Pelembut pakaian): Public domain | https://commons.wikimedia.org/wiki/File:Globus_Saarbr%C3%BCcken,_fabric_softener_pic7.JPG
+- pewangi-pakaian.webp (Pewangi pakaian): CC BY-SA 2.5 | https://commons.wikimedia.org/wiki/File:Febreze.jpg
+- pemutih-pakaian.webp (Pemutih pakaian): CC / Wikimedia Commons | en.wikipedia.org/wiki/Bleach
+- pembersih-lantai.webp (Pembersih lantai): CC BY-SA 3.0 | https://commons.wikimedia.org/wiki/File:Blue_bucket_with_Bruce_hardwood_floor_cleaner.jpg
+- pembersih-kaca.webp (Pembersih kaca): CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Windex_(48089717956).jpg
+- pembersih-kamar-mandi.webp (Pembersih kamar mandi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Toilet_cleaner
+- karbol.webp (Karbol): CC BY-NC | https://www.flickr.com/photos/55595914@N05/6620040883
+- kamper.webp (Kamper): CC / Wikimedia Commons | en.wikipedia.org/wiki/Mothball
+- pengharum-ruangan.webp (Pengharum ruangan): CC / Wikimedia Commons | en.wikipedia.org/wiki/Air_freshener
+- obat-nyamuk-bakar.webp (Obat nyamuk bakar): CC / Wikimedia Commons | en.wikipedia.org/wiki/Mosquito_coil
+- obat-nyamuk-semprot.webp (Obat nyamuk semprot): CC / Wikimedia Commons | en.wikipedia.org/wiki/Aerosol_spray_dispenser
+- kantong-sampah.webp (Kantong sampah): CC / Wikimedia Commons | en.wikipedia.org/wiki/Bin_bag
+- sapu.webp (Sapu): CC / Wikimedia Commons | en.wikipedia.org/wiki/Broom
+- pel-lantai.webp (Pel lantai): CC / Wikimedia Commons | en.wikipedia.org/wiki/Mop
+- lap-kain.webp (Lap kain): CC / Wikimedia Commons | en.wikipedia.org/wiki/Microfiber
+- sikat-lantai.webp (Sikat lantai): Public domain | https://commons.wikimedia.org/wiki/File:Luiwagen_kop.jpg
+- sarung-tangan-karet.webp (Sarung tangan karet): CC BY | https://www.flickr.com/photos/87481332@N00/139373445
+- tisu-dapur.webp (Tisu dapur): CC / Wikimedia Commons | en.wikipedia.org/wiki/Paper_towel
+- pembersih-kerak.webp (Pembersih kerak): CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Man_cleaning_window_with_spray_bottle_in_bright_room_during_daytime.jpg
+- sabun-colek.webp (Sabun colek): Public domain | https://commons.wikimedia.org/wiki/File:Soap_in_blue_dish.JPG
+- baterai-aa.webp (Baterai AA): CC / Wikimedia Commons | en.wikipedia.org/wiki/AA_battery
+- baterai-aaa.webp (Baterai AAA): CC / Wikimedia Commons | en.wikipedia.org/wiki/AAA_battery
+- lampu-led.webp (Lampu LED): CC / Wikimedia Commons | en.wikipedia.org/wiki/LED_lamp
+- korek-api.webp (Korek api): CC / Wikimedia Commons | en.wikipedia.org/wiki/Lighter
+- lilin.webp (Lilin): CC / Wikimedia Commons | en.wikipedia.org/wiki/Candle
+- plastik-wrap.webp (Plastik wrap): CC / Wikimedia Commons | en.wikipedia.org/wiki/Plastic_wrap
+- aluminium-foil.webp (Aluminium foil): CC / Wikimedia Commons | en.wikipedia.org/wiki/Aluminium_foil
+- kertas-roti.webp (Kertas roti): CC / Wikimedia Commons | en.wikipedia.org/wiki/Parchment_paper
+- kantong-plastik.webp (Kantong plastik): CC BY 4.0 | https://commons.wikimedia.org/wiki/File:Plastic_Shopping_Bag_(EE_Cheong_Optical).jpg
+- plastik-klip.webp (Plastik klip): CC / Wikimedia Commons | en.wikipedia.org/wiki/Zipper_storage_bag
+- tusuk-gigi.webp (Tusuk gigi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Toothpick
+- sedotan.webp (Sedotan): CC / Wikimedia Commons | en.wikipedia.org/wiki/Drinking_straw
+- sumpit.webp (Sumpit): CC / Wikimedia Commons | en.wikipedia.org/wiki/Chopsticks
+- piring-kertas.webp (Piring kertas): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Paper_Plate.jpg
+- gelas-plastik.webp (Gelas plastik): CC / Wikimedia Commons | en.wikipedia.org/wiki/Plastic_cup
+- galon-isi-ulang.webp (Galon isi ulang): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Galon_Air_Minum_2.jpg
+- gas-elpiji.webp (Gas elpiji): CC BY-SA 4.0 | https://commons.wikimedia.org/wiki/File:Gas_Elpiji_3_Kg_Buat_Masak_Di_Indonesia.jpg
+- token-listrik.webp (Token listrik): CC / Wikimedia Commons | en.wikipedia.org/wiki/Electricity_meter
+- pulsa.webp (Pulsa): CC / Wikimedia Commons | en.wikipedia.org/wiki/SIM_card
+- isolasi.webp (Isolasi): CC / Wikimedia Commons | en.wikipedia.org/wiki/Adhesive_tape
+- lakban.webp (Lakban): CC / Wikimedia Commons | en.wikipedia.org/wiki/Duct_tape
+- gunting.webp (Gunting): CC / Wikimedia Commons | en.wikipedia.org/wiki/Scissors
+- sendok-plastik.webp (Sendok plastik): CC / Wikimedia Commons | en.wikipedia.org/wiki/Disposable_tableware
+- makanan-kucing.webp (Makanan kucing): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cat_food
+- pasir-kucing.webp (Pasir kucing): CC / Wikimedia Commons | en.wikipedia.org/wiki/Litter_box
+- makanan-ikan.webp (Makanan ikan): CC / Wikimedia Commons | en.wikipedia.org/wiki/Aquarium_fish_feed
+- pupuk-tanaman.webp (Pupuk tanaman): CC / Wikimedia Commons | en.wikipedia.org/wiki/Fertilizer
+- obat-sakit-kepala.webp (Obat sakit kepala): CC / Wikimedia Commons | en.wikipedia.org/wiki/Tablet_%28pharmacy%29
+- vitamin.webp (Vitamin): CC / Wikimedia Commons | en.wikipedia.org/wiki/Multivitamin
+- obat-batuk.webp (Obat batuk): CC / Wikimedia Commons | en.wikipedia.org/wiki/Cold_medicine
+- masker.webp (Masker): CC / Wikimedia Commons | en.wikipedia.org/wiki/Surgical_mask

@@ -40,3 +40,32 @@ describe("iconImage", () => {
     }
   });
 });
+
+describe("itemPhoto", () => {
+  it("matches catalog items and Indonesian colloquial names", async () => {
+    const { itemPhoto } = await import("@/lib/item-photos");
+    expect(itemPhoto("Cabai rawit")).toBe("/photos/cabai-rawit.webp");
+    expect(itemPhoto("Cabe rawit merah")).toBe("/photos/cabai-rawit.webp");
+    expect(itemPhoto("Cabe ijo")).toBe("/photos/cabai-hijau.webp");
+    expect(itemPhoto("Cabe")).toBe("/photos/cabai-merah-besar.webp");
+    expect(itemPhoto("Terong ungu")).toBe("/photos/terong.webp");
+    expect(itemPhoto("Terung")).toBe("/photos/terong.webp");
+    expect(itemPhoto("Pasta gigi Pepsodent")).toBe("/photos/pasta-gigi.webp");
+    expect(itemPhoto("Indomie goreng")).toBe("/photos/mie-instan.webp");
+    expect(itemPhoto("Barang aneh")).toBeNull();
+  });
+
+  it("has a real photo file on disk for every catalog item and alias", async () => {
+    const fs = await import("node:fs");
+    const { CATALOG } = await import("@/lib/catalog");
+    const { ALL_PHOTO_SLUGS, itemPhoto } = await import("@/lib/item-photos");
+    for (const item of CATALOG) {
+      const path = itemPhoto(item.name);
+      expect(path, item.name).not.toBeNull();
+      expect(fs.existsSync(`public${path}`), `${item.name} -> ${path}`).toBe(true);
+    }
+    for (const slug of ALL_PHOTO_SLUGS) {
+      expect(fs.existsSync(`public/photos/${slug}.webp`), slug).toBe(true);
+    }
+  });
+});
